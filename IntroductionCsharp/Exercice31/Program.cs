@@ -53,7 +53,7 @@ do
                 }
                 sum += userInput;
                 cpt++;
-            } while (userInput != 999);
+            } while (true);
             break;
         case 2:
             if (cpt > 0)
