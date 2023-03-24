@@ -1,4 +1,20 @@
-﻿static void showContacts(List<string> contacts)
+﻿static void addContacts(List<string> contacts)
+{
+    Console.Clear();
+    Console.ForegroundColor = ConsoleColor.Green;
+    Console.WriteLine("--- Saisir les contacts ---");
+    Console.ResetColor();
+    do
+    {
+        Console.Write($"Nom et prénom du contact N°{contacts.Count + 1} : ");
+        string contact = Console.ReadLine();
+        if (contact == "999")
+            break;
+        contacts.Add(contact);
+    } while (true);
+}
+
+static void showContacts(List<string> contacts)
 {
     if (contacts.Count == 0)
     {
@@ -89,20 +105,8 @@ do
     switch (choice)
     {
         case 1:
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("--- Saisir les contacts ---");
-            Console.ResetColor();
-            do
-            {
-                Console.Write($"Nom et prénom du contact N°{contacts.Count + 1} : ");
-                string contact = Console.ReadLine();
-                if (contact == "999")
-                    break;
-                contacts.Add(contact);
-            } while (true);
+            addContacts(contacts);
             break;
-
         case 2:
             showContacts(contacts);
             break;
@@ -112,7 +116,6 @@ do
         case 4:
             deleteContact(contacts);
             break;
-
         case 0:
             break;
         default:
