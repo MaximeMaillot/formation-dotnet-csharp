@@ -1,5 +1,17 @@
-﻿int height;
+﻿Random random = new ();
+int height;
 bool isCorrect;
+
+Dictionary<int, char> characters = new()
+{
+    [0] = '*',
+    [1] = 'o',
+    [2] = '-',
+    [3] = '_',
+    [4] = 'p',
+    [5] = 's'
+};
+
 do
 {
     Console.Write("Saisir la hauteur du triangle : ");
@@ -14,23 +26,21 @@ int width = height + (height - 1);
 
 for (int i = 1; i <= height; i++)
 {
-    string line = "";
+
     int triangleLength = i + (i - 1);
-    // Space before the triangle
-    for (int j =0; j < ((width / 2f) - (triangleLength / 2f)); j++)
+    for (int j = 0; j < ((width - triangleLength) / 2f + triangleLength); j++)
     {
-        line += " ";
+        Console.ForegroundColor = (ConsoleColor)random.Next(0,16);
+        if (j < ((width / 2f) - (triangleLength / 2f)))
+        {
+            Console.Write(" ");
+        }
+        else
+        {
+            Console.Write(characters[random.Next(0, characters.Count)]);
+        }
     }
-    // The triangle
-    for (int j = 0; j < triangleLength; j++)
-    {
-        line += "*";
-    }
-    // Space after the triangle
-    for (int j = 0; j < ((width / 2f) - (triangleLength / 2f)); j++)
-    {
-        line += " ";
-    }
-    Console.WriteLine(line);
+    Console.WriteLine();
 }
+Console.ResetColor();
 

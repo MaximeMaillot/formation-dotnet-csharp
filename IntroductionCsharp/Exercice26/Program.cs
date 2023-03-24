@@ -6,7 +6,7 @@ int year = 2015;
 
 while (population < targetPopulation)
 {
-    population += population * (rate / 100);
+    population += population * (rate / 100f);
     year++;
 }
 

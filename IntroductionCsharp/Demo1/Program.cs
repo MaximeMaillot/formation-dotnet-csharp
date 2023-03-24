@@ -1,6 +1,3 @@
-﻿string r = "";
-while (r != "-1")
-{
-    r = Console.ReadLine();
-    Console.WriteLine(r);
-}
+﻿Random random = new Random();
+int value = random.Next(0, 50);
+int[] tableau = new int[10];
