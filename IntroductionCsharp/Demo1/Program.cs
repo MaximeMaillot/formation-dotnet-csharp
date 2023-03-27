@@ -1,3 +1,3 @@
-﻿Random random = new Random();
-int value = random.Next(0, 50);
-int[] tableau = new int[10];
+﻿int parse = (int)Console.ReadLine();
+int typeParse = int.Parse(Console.ReadLine());
+int classParse = Convert.ToInt32(Console.ReadLine());
