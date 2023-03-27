@@ -156,6 +156,7 @@ do // Game loop
     }
 } while (score < 21 && userInput != "n");
 
+// Dealer continue to draw until he's satisfied
 while (dealerDraw)
 {
     dealerDraw = doesDealerDraw(dealerCards, dealerScore);
