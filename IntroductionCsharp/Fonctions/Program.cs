@@ -67,23 +67,13 @@ static string InputAdn ()
     string adn = Console.ReadLine();
     if (!CheckAdn(adn))
     {
-        string newAdn = "";
-        for (int i = 0; i < adn.Length; i++)
-        {
-
-            if (adn[i] == 'a' || adn[i] == 't' || adn[i] == 'c' || adn[i] == 'g')
-            {
-                newAdn += adn[i];
-            }
-        }
-        Console.WriteLine("Fixed ADN : " + newAdn);
-        return newAdn;
+        Console.WriteLine("Erreur de saisie");
     }
     Console.WriteLine("ADN : " + adn);
     return adn;
 }
 
-Console.WriteLine("CheckAdn()");
+Console.WriteLine("InputAdn()");
 //InputAdn();
 Console.WriteLine();
 
