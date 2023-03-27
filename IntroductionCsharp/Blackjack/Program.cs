@@ -196,7 +196,12 @@ else if (score > dealerScore)
         Console.ForegroundColor = ConsoleColor.Blue;
         Console.WriteLine("Victoire !");
     }
-} else
+} else if (score == dealerScore)
+{
+    Console.ForegroundColor = ConsoleColor.DarkYellow;
+    Console.WriteLine("Égalité !");
+} 
+else
 {
     Console.ForegroundColor = ConsoleColor.Red;
     Console.WriteLine("Perdu avec un score  de " + score + " contre le score de " + dealerScore + " du dealer");
