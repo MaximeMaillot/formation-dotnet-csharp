@@ -22,6 +22,12 @@ static void IHM()
         do
         {
             isCorrect = int.TryParse(Console.ReadLine(), out choice);
+            if (!isCorrect)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Entrez un choix correct");
+                Console.ResetColor();
+            }
         } while (!isCorrect);
         if (choice != 4 && choice != 0)
         {
@@ -225,8 +231,10 @@ static void UpdateNom(List<string> prenoms, List<string> prenomsTires, string pr
     Console.ResetColor();
 }
 
-//IHM();
+IHM();
 
+/*
+// Use Class instead of function for the Great TP
 static void IHMClass()
 {
     Tirage tirage = new Tirage(new List<string> { "Maxime" });
@@ -248,7 +256,9 @@ static void IHMClass()
             isCorrect = int.TryParse(Console.ReadLine(), out choice);
             if (!isCorrect)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Entrez un choix correct");
+                Console.ResetColor();
             }
         } while (!isCorrect);
         switch ((Choice)choice)
@@ -284,3 +294,4 @@ static void IHMClass()
 }
 
 IHMClass();
+*/
