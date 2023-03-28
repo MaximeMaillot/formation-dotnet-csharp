@@ -1,7 +1,7 @@
 ﻿
 static string ConcatenateWithEmptySpace(string str1, string str2) 
 {
-    return str1 + " " + str2;
+    return $"{str1} {str2}";
 }
 Console.WriteLine("ConcatenateWithEmptySpace(John, Doe)");
 Console.WriteLine(ConcatenateWithEmptySpace("John", "Doe"));
@@ -41,55 +41,6 @@ Console.WriteLine("CountA(afzbefkzj");
 Console.WriteLine(CountA("afzbefkzj"));
 Console.WriteLine("CountA(girgnk)");
 Console.WriteLine(CountA("girgnk"));
-Console.WriteLine();
-
-static bool CheckAdn (string adn)
-{
-    for (int i =0; i < adn.Length; i++)
-    {
-        if (adn[i] != 'a' && adn[i] != 't' && adn[i] != 'c' && adn[i] != 'g')
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
-Console.WriteLine("CheckAdn(abdfergrfvdf)");
-Console.WriteLine(CheckAdn("abdfergrfvdf"));
-Console.WriteLine("CheckAdn(atcgatcg)");
-Console.WriteLine(CheckAdn("atcgatcg"));
-Console.WriteLine();
-
-static string InputAdn ()
-{
-    Console.Write("Entrez une séquence ADN (atcg) : ");
-    string adn = Console.ReadLine();
-    if (!CheckAdn(adn))
-    {
-        Console.WriteLine("Erreur de saisie");
-    }
-    Console.WriteLine("ADN : " + adn);
-    return adn;
-}
-
-Console.WriteLine("InputAdn()");
-//InputAdn();
-Console.WriteLine();
-
-
-static double CompareAdn (string adn, string sequence)
-{
-    int nbSequence = adn.Split(sequence).Length - 1;
-    return Math.Round((sequence.Length * nbSequence) / (float)adn.Length, 2);
-}
-
-Console.WriteLine("CompareAdn(atcgatcgatcgatcg, atcg)");
-Console.WriteLine(CompareAdn("atcgatcgatcgatcg", "atcg"));
-Console.WriteLine("CompareAdn(atcgatcgatcgatcg, atcga)");
-Console.WriteLine(CompareAdn("atcgatcgatcgatcg", "atcga"));
-Console.WriteLine("CompareAdn(atcgatcgatcgatcg, at)");
-Console.WriteLine(CompareAdn("atcgatcgatcgatcg", "at"));
 Console.WriteLine();
 
 static (int, int, float, int) operation(int nb1, int nb2)
