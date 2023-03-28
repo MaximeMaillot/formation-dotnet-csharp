@@ -10,7 +10,7 @@
             _listPrenomsTires = new();
         }
 
-        bool checkListIntegrity()
+        bool CheckListIntegrity()
         {
             if (_listPrenoms.Count == 0)
             {
@@ -25,7 +25,7 @@
         public bool EffectuerTirage()
         {
             Console.Clear();
-            if (!checkListIntegrity())
+            if (!CheckListIntegrity())
             {
                 return false;
             }
@@ -48,7 +48,7 @@
         public bool AfficherTirees()
         {
             Console.Clear();
-            if (!checkListIntegrity())
+            if (!CheckListIntegrity())
             {
                 return false;
             }
@@ -70,7 +70,7 @@
         public bool AfficherRestantes()
         {
             Console.Clear();
-            if (!checkListIntegrity())
+            if (!CheckListIntegrity())
             {
                 return false;
             }
@@ -112,7 +112,7 @@
 
         public string AskExistingPrenom(string askInput)
         {
-            if (!checkListIntegrity())
+            if (!CheckListIntegrity())
             {
                 return "";
             }

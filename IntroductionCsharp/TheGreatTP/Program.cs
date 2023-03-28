@@ -4,9 +4,11 @@ using TheGreatTP;
 
 static void IHM()
 {
-    List<string> prenoms = new () { "Maxime", "Lazare", "Justine", "Gianni", "Thibault" };
-    List<string> prenomsTires = new();
-    do
+    // J'initialise ma liste de prenoms avec des prenoms en dur
+    List<string> prenoms = new() { "Maxime", "Lazare", "Justine", "Gianni", "Thibault" };
+    // J'initialise aussi la liste des prenoms tirés pour l'instant vide
+    List<string> prenomsTires = new List<string>();
+    do // Boucle qui gère le menu
     {
         Console.WriteLine("--- Le grand tirage au sort ---\n");
         Console.WriteLine("1--- Effectuer un tirage");
@@ -16,26 +18,32 @@ static void IHM()
         Console.WriteLine("5--- Modifier un prenom");
         Console.WriteLine("6--- Supprimer un prenom");
         Console.WriteLine("0--- Quitter\n");
-        Console.Write("Faites votre choix : ");
+
         int choice;
         bool isCorrect;
-        do
+        do // Demande à l'utilisateur son choix jusqu'à ce qu'il soit un entier
         {
+            Console.Write("Faites votre choix : ");
+            // isCorrect sera true si le choix de l'utilisateur est un entier, sinon false
+            // choice récupère le choix de notre utilisateur
             isCorrect = int.TryParse(Console.ReadLine(), out choice);
+            // Si l'utilisateur à rentrer autre chose qu'un entier
             if (!isCorrect)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Entrez un choix correct");
-                Console.ResetColor();
+                WriteInColor("Entrez un choix correct", ConsoleColor.Red);
             }
         } while (!isCorrect);
+        // Condition qui ne s'applique que si on ne veut pas faire un ajout ou quitter le menu
         if (choice != 4 && choice != 0)
         {
-            if (!checkListIntegrity(prenoms))
+            // Si la liste est vide on affiche un message d'erreur
+            if (!CheckListIntegrity(prenoms))
             {
+                WriteInColor("La liste est vide, pensez à la remplir", ConsoleColor.Red);
                 continue;
             }
         }
+        // On rentre dans la bonne condition en fonction du choix de l'utilisateur
         switch (choice)
         {
             case 1:
@@ -59,22 +67,27 @@ static void IHM()
             case 0:
                 return;
             default:
+                // Si l'utilisateur à rentrer un entier qui n'est pas dans le menu
                 Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Entrez un choix correct");
-                Console.ResetColor();
+                WriteInColor("Entrez un choix correct", ConsoleColor.Red);
                 break;
         }
     } while (true);
 }
 
-static bool checkListIntegrity(List<string> prenoms)
+// Fonction qui permet d'ecrire un message "text" dans une couleur "color".
+static void WriteInColor(string text, ConsoleColor color)
+{
+    Console.ForegroundColor = color;
+    Console.WriteLine(text);
+    Console.ResetColor();
+}
+
+// Vérifie qu'il y a au moins un prénom dans la liste
+static bool CheckListIntegrity(List<string> prenoms)
 {
     if (prenoms.Count == 0)
     {
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("La liste est vide, pensez à la remplir");
-        Console.ResetColor();
         return false;
     }
     return true;
@@ -84,32 +97,30 @@ static bool checkListIntegrity(List<string> prenoms)
 static void EffectuerTirage(List<string> prenoms, List<string> prenomsTires)
 {
     Console.Clear();
-    if (!checkListIntegrity(prenoms))
-    {
-        return;
-    }
     Random random = new();
-    List<string> prenomsNotTires = prenoms.Where(p => prenomsTires.All(p2 => p2 != p)).ToList();
+
+    // prenoms.Where => Filtre prenoms en fonction de la fonction à l'intérieur
+    // prenomsTires.All => Verifie tous les prenoms tires et ne retourner que ceux pas présent dans prenoms
+    // ** Pour chaque prenom, verifie qu'il n'est pas present dans prenomTires, si c'est le cas, ajoute le à ma liste **
+    List<string> prenomsNotTires = prenoms.Where(prenom => prenomsTires.All(prenomTire => prenomTire != prenom)).ToList();
     int tirage = random.Next(0, prenomsNotTires.Count);
     prenomsTires.Add(prenomsNotTires[tirage]);
-    Console.ForegroundColor = ConsoleColor.Green;
-    Console.WriteLine($"L'heureux gagant est {prenomsNotTires[tirage]}");
+
+    WriteInColor($"L'heureux gagant est {prenomsNotTires[tirage]}", ConsoleColor.Green);
+
+    // Reset la liste si on a tiré tout le monde
     if (prenomsTires.Count == prenoms.Count)
     {
-        Console.ForegroundColor = ConsoleColor.DarkYellow;
-        Console.WriteLine($"La liste est remise à 0");
+        WriteInColor("La liste est remise à 0", ConsoleColor.Green);
         prenomsTires.Clear();
     }
-    Console.ResetColor();
 }
 
 // affichage des personne tirées
 static void AfficherTirees(List<string> prenomsTires)
 {
     Console.Clear();
-    Console.ForegroundColor = ConsoleColor.Red;
-    Console.WriteLine("Liste des personnes déjà tirés");
-    Console.ResetColor();
+    WriteInColor("Liste des personnes déjà tirés", ConsoleColor.Red);
     string tabulation = "";
     for (int i = 0; i < prenomsTires.Count; i++)
     {
@@ -125,10 +136,9 @@ static void AfficherTirees(List<string> prenomsTires)
 static void AfficherRestantes(List<string> prenoms, List<string> prenomsTires)
 {
     Console.Clear();
-    Console.ForegroundColor = ConsoleColor.Cyan;
-    Console.WriteLine("Personnes n'ayant pas encore fait de correction : ");
-    Console.ResetColor();
+    WriteInColor("Personnes n'ayant pas encore fait de correction", ConsoleColor.Cyan);
     string tabulation = "";
+    // prenoms.Except => tous les prenoms moins les prenomTires
     List<string> prenomsRestant = prenoms.Except(prenomsTires).ToList();
     for (int i = 0; i < prenomsRestant.Count; i++)
     {
@@ -151,84 +161,62 @@ static string AskExistingPrenom(List<string> prenoms, string askInput)
     {
         Console.Write(askInput);
         string prenom = Console.ReadLine();
-        if (prenoms.Any(item => item == prenom))
+        // Vérifie si le prenom existe
+        if (prenoms.Any(p => p == prenom))
         {
             return prenom;
         }
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("Ce prénom n'existe pas");
-        Console.ResetColor();
+        WriteInColor("Ce prénom n'existe pas dans la liste", ConsoleColor.Red);
     } while (true);
 }
 
 // Ask for a new prenom that should not exist in the list
 static string AskPrenom(List<string> prenoms, string askInput)
 {
-    string prenom;
     do
     {
         Console.Write(askInput);
-        prenom = Console.ReadLine();
+        string prenom = Console.ReadLine();
         if (prenoms.Any(item => item == prenom))
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Ce prénom existe déjà dans la liste");
-            prenom = "";
+            WriteInColor("Ce prénom existe déjà dans la liste", ConsoleColor.Red);
         }
         else if (prenom.Length < 2)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Un prénom fait au minimum 2 caractères");
+            WriteInColor("Un prénom fait au minimum 2 caractères", ConsoleColor.Red);
+        } else
+        {
+            return prenom;
         }
-        Console.ResetColor();
-    } while (prenom.Length < 2);
-    return prenom;
+    } while (true);
 }
 
 // Delete by name
-static void DeleteNom(List<string> prenoms, List<string> prenomsTires, string prenom)
+static void DeleteNom(List<string> prenoms, List<string> prenomsTires, string prenomoDelete)
 {
-    if (prenoms.Any(p => p == prenom))
+    prenoms.Remove(prenoms.Single(prenom => prenom == prenomoDelete));
+    // Verifie s'il existe dans la liste des prenoms Tires et le supprime si c'est le cas
+    if (prenomsTires.Any(prenomTire => prenomTire == prenomoDelete))
     {
-        prenoms.Remove(prenoms.Single(p => p == prenom));
-        if (prenomsTires.Any(p => p == prenom))
-        {
-            prenomsTires.Remove(prenomsTires.Single(p => p == prenom));
-        }
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine($"{prenom} enlevé de la liste avec succès");
-        Console.ResetColor();
+        prenomsTires.Remove(prenomsTires.Single(prenomTire => prenomTire == prenomoDelete));
     }
-    else
-    {
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine($"{prenom} n'existe pas dans la liste");
-        Console.ResetColor();
-    }
+    WriteInColor($"{prenomoDelete} enlevé de la liste avec succès", ConsoleColor.Green);
 }
 
 // Update by name
 static void UpdateNom(List<string> prenoms, List<string> prenomsTires, string prenomToModify)
 {
-    int index = prenoms.FindIndex(p => p == prenomToModify);
-    if (index < 0)
+    // Trouve l'index du prenom à modifier
+    int index = prenoms.FindIndex(prenom => prenom == prenomToModify);
+    // Si le mot n'existe pas dans la liste
+    string prenom = AskPrenom(prenoms, "Entrez le nouveau prenom : ");
+    prenoms[index] = prenom;
+    index = prenomsTires.FindIndex(prenomTire => prenomTire == prenomToModify);
+    if (index != -1)
     {
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine($"{prenomToModify} n'existe pas dans la liste");
-
-    } else
-    {
-        string prenom = AskPrenom(prenoms, "Entrez le nouveau prenom : ");
-        prenoms[index] = prenom;
-        index = prenomsTires.FindIndex(p => p == prenomToModify);
-        if (index != -1)
-        {
-            prenomsTires[index] = prenom;
-        }
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine($"{prenomToModify} modifié en {prenom} dans la liste");
+        prenomsTires[index] = prenom;
     }
-    Console.ResetColor();
+    WriteInColor($"{prenomToModify} modifié en {prenom} dans la liste", ConsoleColor.Green);
 }
 
 IHM();
