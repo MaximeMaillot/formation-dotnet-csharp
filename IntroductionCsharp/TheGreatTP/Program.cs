@@ -1,5 +1,7 @@
 ﻿// fonction qui sert à lancer l'application, elle contiendra les instruction permettant de faire fonctionner
 // l'interface utilisateur (menu principal, ...) => IHM == Interface Homme Machine
+using TheGreatTP;
+
 static void IHM()
 {
     List<string> prenoms = new () { "Maxime", "Lazare", "Justine", "Gianni", "Thibault" };
@@ -21,6 +23,13 @@ static void IHM()
         {
             isCorrect = int.TryParse(Console.ReadLine(), out choice);
         } while (!isCorrect);
+        if (choice != 4 && choice != 0)
+        {
+            if (!checkListIntegrity(prenoms))
+            {
+                continue;
+            }
+        }
         switch (choice)
         {
             case 1:
@@ -53,10 +62,26 @@ static void IHM()
     } while (true);
 }
 
+static bool checkListIntegrity(List<string> prenoms)
+{
+    if (prenoms.Count == 0)
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("La liste est vide, pensez à la remplir");
+        Console.ResetColor();
+        return false;
+    }
+    return true;
+}
+
 // partie dédiée au tirage, lorsque tout le monde a été tiré on affiche à l'utilisateur un message pour dire que la liste a été remise à 0
 static void EffectuerTirage(List<string> prenoms, List<string> prenomsTires)
 {
     Console.Clear();
+    if (!checkListIntegrity(prenoms))
+    {
+        return;
+    }
     Random random = new();
     List<string> prenomsNotTires = prenoms.Where(p => prenomsTires.All(p2 => p2 != p)).ToList();
     int tirage = random.Next(0, prenomsNotTires.Count);
@@ -160,7 +185,10 @@ static void DeleteNom(List<string> prenoms, List<string> prenomsTires, string pr
     if (prenoms.Any(p => p == prenom))
     {
         prenoms.Remove(prenoms.Single(p => p == prenom));
-        prenomsTires.Remove(prenomsTires.Single(p => p == prenom));
+        if (prenomsTires.Any(p => p == prenom))
+        {
+            prenomsTires.Remove(prenomsTires.Single(p => p == prenom));
+        }
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine($"{prenom} enlevé de la liste avec succès");
         Console.ResetColor();
@@ -197,4 +225,62 @@ static void UpdateNom(List<string> prenoms, List<string> prenomsTires, string pr
     Console.ResetColor();
 }
 
-IHM();
+//IHM();
+
+static void IHMClass()
+{
+    Tirage tirage = new Tirage(new List<string> { "Maxime" });
+    do
+    {
+        Console.WriteLine("--- Le grand tirage au sort ---\n");
+        Console.WriteLine("1--- Effectuer un tirage");
+        Console.WriteLine("2--- Voir la liste des personnes déjà tirées");
+        Console.WriteLine("3--- Voir la liste des personnes restantes");
+        Console.WriteLine("4--- Ajouter un prenom");
+        Console.WriteLine("5--- Modifier un prenom");
+        Console.WriteLine("6--- Supprimer un prenom");
+        Console.WriteLine("0--- Quitter\n");
+        int choice;
+        bool isCorrect;
+        do
+        {
+            Console.Write("Faites votre choix : ");
+            isCorrect = int.TryParse(Console.ReadLine(), out choice);
+            if (!isCorrect)
+            {
+                Console.WriteLine("Entrez un choix correct");
+            }
+        } while (!isCorrect);
+        switch ((Choice)choice)
+        {
+            case Choice.Draw:
+                tirage.EffectuerTirage();
+                break;
+            case Choice.ListDrawn:
+                tirage.AfficherTirees();
+                break;
+            case Choice.ListLeft:
+                tirage.AfficherRestantes();
+                break;
+            case Choice.Add:
+                tirage.AjouterNom();
+                break;
+            case Choice.Update:
+                tirage.UpdateNom(tirage.AskExistingPrenom("Prénom à modifier : "));
+                break;
+            case Choice.Delete:
+                tirage.DeleteNom(tirage.AskExistingPrenom("Prénom à supprimer : "));
+                break;
+            case Choice.Exit:
+                return;
+            default:
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Entrez un choix correct");
+                Console.ResetColor();
+                break;
+        }
+    } while (true);
+}
+
+IHMClass();

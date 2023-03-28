@@ -1,3 +1,8 @@
-﻿int parse = (int)Console.ReadLine();
-int typeParse = int.Parse(Console.ReadLine());
-int classParse = Convert.ToInt32(Console.ReadLine());
+﻿string adn ="a", sequence ="b";
+for (int i = 0; i < adn.Length; i++)
+{
+    if (adn[i] == sequence[0])
+    {
+
+    };
+}
