@@ -61,13 +61,13 @@ namespace CompteBancaire.Classes
                         switch (choice)
                         {
                             case 1:
-                                accounts.Add(new CurrentAccount(askClientDetails()));
+                                accounts.Add(new CurrentAccount(AskClientDetails()));
                                 break;
                             case 2:
-                                accounts.Add(new SavingAccount(askClientDetails()));
+                                accounts.Add(new SavingAccount(AskClientDetails()));
                                 break;
                             case 3:
-                                accounts.Add(new PayedAccount(askClientDetails()));
+                                accounts.Add(new PayedAccount(AskClientDetails()));
                                 break;
                             case 0:
                                 break;
@@ -175,7 +175,7 @@ namespace CompteBancaire.Classes
                 }
             } while (true);
         }
-        private static Client askClientDetails()
+        private static Client AskClientDetails()
         {
             bool isCorrect;
             Console.Write("Quel est le prénom du client ? ");
