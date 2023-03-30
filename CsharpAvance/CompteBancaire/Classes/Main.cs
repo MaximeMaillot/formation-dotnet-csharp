@@ -20,9 +20,7 @@ namespace CompteBancaire.Classes
                 Console.WriteLine("4. Effectuer un retrait");
                 Console.WriteLine("5. Afficher les opérations et le solde");
                 Console.WriteLine("0. Quitter le programme");
-                int choice;
-                int compteId;
-                int index;
+                int choice, compteId, index;
                 bool isCorrect;
                 do
                 {
