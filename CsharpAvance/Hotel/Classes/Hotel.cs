@@ -11,6 +11,7 @@
         public List<Client> Clients { get; private set; } = new List<Client>();
         public List<Reservation> Reservations { get; private set; } = new List<Reservation>();
         public List<Chambre> Chambres { get; private set; } = new List<Chambre>();
+
         /// <summary>
         /// Add a client to the hostel
         /// </summary>
@@ -20,6 +21,7 @@
             Clients.Add(client);
             Console.WriteLine("Client ajouté avec succès");
         }
+
         /// <summary>
         /// Show all clients in the hotel
         /// </summary>
@@ -35,6 +37,7 @@
                 client.ShowClient();
             }
         }
+
         /// <summary>
         /// Show all reservations of a client
         /// </summary>
@@ -49,6 +52,7 @@
                 }
             }
         }
+
         /// <summary>
         /// Get all reservations of a client
         /// </summary>
@@ -58,6 +62,7 @@
         {
             return Reservations.FindAll((reservation) => reservation.Numero == numero);
         }
+
         /// <summary>
         /// Show all reservations of a client by its numero
         /// </summary>
@@ -77,6 +82,7 @@
                 }
             }
         }
+
         /// <summary>
         /// Show all reservations
         /// </summary>
@@ -91,6 +97,7 @@
                 reservation.ShowReservations();
             }
         }
+
         /// <summary>
         /// Add a reservation
         /// </summary>
@@ -100,6 +107,7 @@
             Reservations.Add(reservation);
             HotelConsole.WriteInColor("Reservation ajouté avec succès", ConsoleColor.Green);
         }
+
         /// <summary>
         /// Remove a reservation
         /// </summary>
@@ -109,6 +117,7 @@
             Reservations.Remove(reservation);
             HotelConsole.WriteInColor("Reservation annulé avec succès", ConsoleColor.Green);
         }
+
         /// <summary>
         /// Add a chamber
         /// </summary>
@@ -126,6 +135,7 @@
         {
             return Clients.Count > 0;
         }
+
         /// <summary>
         /// Check if the hostel has reservations
         /// </summary>
@@ -134,6 +144,7 @@
         {
             return Reservations.Count > 0;
         }
+
         /// <summary>
         /// Check if the hostel has chambers
         /// </summary>
@@ -142,6 +153,7 @@
         {
             return Chambres.Count > 0;
         }
+
         /// <summary>
         /// Check if a client exist
         /// </summary>
@@ -151,6 +163,7 @@
         {
             return Clients.Any(client => client.Numero == numero);
         }
+
         /// <summary>
         /// Check if a chamber exist
         /// </summary>
@@ -160,6 +173,7 @@
         {
             return Chambres.Any(chambre => chambre.Numero == numero);
         }
+
         /// <summary>
         /// Check if a reservation exist
         /// </summary>
@@ -169,6 +183,7 @@
         {
             return Reservations.Any(reservation => reservation.Numero == numero);
         }
+
         /// <summary>
         /// Get a chamber by its numero
         /// </summary>
@@ -178,6 +193,7 @@
         {
             return Chambres.Find((chambre) => chambre.Numero == numero);
         }
+
         /// <summary>
         /// Get a reservation by its numero
         /// </summary>
@@ -187,6 +203,7 @@
         {
             return Reservations.Find((reservation) => reservation.Numero == numero);
         }
+
         /// <summary>
         /// Get a client by its numero
         /// </summary>
