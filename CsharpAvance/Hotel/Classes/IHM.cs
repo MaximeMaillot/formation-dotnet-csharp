@@ -4,6 +4,15 @@
     {
         static void Start()
         {
+            // **Possible TODO List**
+            // Crud for chamber
+            // Crud for client
+            // Crud for Reservation
+            // Chamber and Reservation Status handling
+            // Check if chamber is already reserved
+            // Ask for the number of bed and give possible chamber
+            // Reservation by date so you can have multiple reservation per chamber but date cannot overlap
+            // Add payment
             int choice;
 
             Console.Write("Quel est le nom de l'Hôtel ? ");
@@ -11,7 +20,7 @@
 
             hotel.AddChambre(new Chambre("Open", 12, 100));
             hotel.AddChambre(new Chambre("Open", 10, 90));
-            hotel.AddChambre(new Chambre("Closed", 6, 250));
+            hotel.AddChambre(new Chambre("Open", 6, 250));
 
             do
             {
