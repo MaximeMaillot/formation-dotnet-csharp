@@ -2,18 +2,27 @@
 {
     internal class Client
     {
-        public Client(string nom, string prenom, string numTel)
+        private Client()
         {
-            Numero++;
+            Numero = NumeroStatic++;
+        }
+        public Client(string nom, string prenom, string numTel):this()
+        {
             Nom = nom;
             Prenom = prenom;
             NumTel = numTel;
         }
-        public static int Numero { get; set; }
+        private static int NumeroStatic { get; set; } = 1;
+        public int Numero { get; set; }
         public string Nom { get; set; }
 
         public string Prenom { get; set; }
 
         public string NumTel{get;set;}
+
+        public void ShowClient()
+        {
+            Console.WriteLine($"Client N°{Numero} : {Prenom} {Nom}, Téléphone : {NumTel}");
+        }
     }
 }

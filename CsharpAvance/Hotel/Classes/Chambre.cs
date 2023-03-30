@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Hostel.Classes
+﻿namespace Hostel.Classes
 {
     internal class Chambre
     {
-        public Chambre(string statut, int nbLit, float tarif)
+        private Chambre()
         {
-            Numero++;
+            Numero = NumeroStatic++;
+        }
+        public Chambre(string statut, int nbLit, float tarif):this()
+        {
             Statut = statut;
             NbLit = nbLit;
             Tarif = tarif;
         }
+        private static int NumeroStatic { get; set; } = 1;
         public int Numero { get; set; }
         public string Statut { get; set; }
         public int NbLit { get; set; }
