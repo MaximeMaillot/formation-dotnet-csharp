@@ -42,13 +42,21 @@
                 Console.Clear();
                 switch (choix)
                 {
-                    case 1: // TODO Check numtel
+                    case 1:
                         Console.Write("Quel est le prénom du client ? ");
                         string prenom = Console.ReadLine();
                         Console.Write("Quel est le nom du client ? ");
                         string nom = Console.ReadLine();
-                        Console.Write("Quel est le numéro de téléphone du client ? ");
-                        string tel = Console.ReadLine();
+                        string tel;
+                        do {
+                            Console.Write("Quel est le numéro de téléphone du client ? ");
+                            tel = Console.ReadLine();
+                            isCorrect = int.TryParse(tel, out _) && tel.Length == 10;
+                            if (!isCorrect)
+                            {
+                                HotelConsole.WriteInColor("Un numéro de téléphone est composé de 10 chiffres", ConsoleColor.Red);
+                            }
+                        } while (!isCorrect);
                         hotel.AddClient(new Client(nom, prenom, tel));
                         break;
                     case 2:
@@ -110,7 +118,7 @@
                         } while (!isCorrect);
                         hotel.AddReservation(new Reservation(hotel.GetChambreByNumero(numeroChambre), hotel.GetClientByNumero(numeroClient)));
                         break;
-                    case 5: // TODO Faire des limitations
+                    case 5:
                         int numReservation;
                         do
                         {
