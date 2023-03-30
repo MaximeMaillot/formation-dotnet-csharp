@@ -83,7 +83,7 @@ namespace CompteBancaire.Classes
                         {
                             Console.Write("Quel compte souhaitez-vous créditer ? ");
                             isCorrect = int.TryParse(Console.ReadLine(), out compteId);
-                            index = accounts.FindIndex((account) => account.Id == compteId
+                            index = accounts.FindIndex((account) => account.Id == compteId);
                             if (!isCorrect)
                             {
                                 Console.WriteLine("Rentrez un numéro de compte correct");
