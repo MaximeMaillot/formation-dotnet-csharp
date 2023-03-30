@@ -82,7 +82,7 @@
                                 }
                             }
                         } while (!isCorrect);
-                        hotel.ShowReservationByClientNumero(numero);
+                        hotel.ShowReservationsByClientNumero(numero);
                         break;
                     case 4:
                         if (!hotel.HasClients())

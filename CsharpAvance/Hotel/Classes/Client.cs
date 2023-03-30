@@ -20,6 +20,9 @@
 
         public string NumTel{get;set;}
 
+        /// <summary>
+        /// Show a client
+        /// </summary>
         public void ShowClient()
         {
             Console.WriteLine($"Client N°{Numero} : {Prenom} {Nom}, Téléphone : {NumTel}");

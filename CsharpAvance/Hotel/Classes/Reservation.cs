@@ -25,7 +25,10 @@
             Chambres.Add(chambre);
         }
 
-        public void ShowReservation()
+        /// <summary>
+        /// Show the chambers reserved by the client
+        /// </summary>
+        public void ShowReservations()
         {
             if (Chambres.Count == 0) {
                 HotelConsole.WriteInColor("Pas de réservations", ConsoleColor.Red);

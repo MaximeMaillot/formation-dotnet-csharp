@@ -8,6 +8,11 @@ namespace Hostel.Classes
 {
     internal static class HotelConsole
     {
+        /// <summary>
+        /// Write a message in the console with a certain color
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="color"></param>
         public static void WriteInColor(string msg, ConsoleColor color)
         {
             Console.ForegroundColor = color;
