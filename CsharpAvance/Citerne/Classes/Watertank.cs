@@ -1,25 +1,70 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Citerne.Classes
+﻿namespace Citerne.Classes
 {
-    internal class Watertank
+    internal class WaterTank
     {
-        private static int _Id = 1;
-        public int Id { get; set; }
-        public int Weight { get; set; }
-        public int WaterCapacity { get; set; }
-        public int WaterLevel { get; set; } = 0;
-        public static int TotalWaterLevel { get; set; }
+        private int _waterLevel = 0;
 
-        public Watertank(int weight, int waterCapacity, int waterLevel) 
+        private static int _Id = 1;
+        private static int _totalWaterLevel;
+        private int _id;
+        private int _weight;
+        private int _waterCapacity;
+        public int Id { get => _id; set
+            {
+                if (value < 1)
+                {
+                    throw new Exception();
+                }
+                _id = value;
+            }
+        }
+        public int Weight { get => _weight; set
+            {
+                if (value <= 0)
+                {
+                    throw new Exception();
+                }
+                _weight = value;
+            }
+        }
+        public int WaterCapacity
+        {
+            get => _waterCapacity;
+            set
+            {
+                if (value < 0)
+                {
+                    throw new Exception();
+                }
+                _waterCapacity = value;
+            }
+        }
+        public int WaterLevel {
+            get => _waterLevel; set
+            {
+                if (value < 0)
+                {
+                    throw new Exception();
+                }
+                TotalWaterLevel -= _waterLevel;
+                _waterLevel = value;
+                TotalWaterLevel += _waterLevel;
+            }
+        }
+        public static int TotalWaterLevel { get => _totalWaterLevel; private set
+            {
+                if (value < 0)
+                {
+                    throw new Exception();
+                }
+                _totalWaterLevel = value;
+            }
+        }
+
+        public WaterTank(int weight, int waterCapacity, int waterLevel) 
         {
             WaterCapacity = waterCapacity;
             WaterLevel = waterLevel;
-            TotalWaterLevel += waterLevel;
             Weight = weight;
             Id = _Id++;
         }
@@ -34,16 +79,12 @@ namespace Citerne.Classes
             int waterGet = 0;
             if (WaterLevel + quantity > WaterCapacity)
             {
-                TotalWaterLevel += WaterCapacity - WaterLevel;
-                WaterLevel = WaterCapacity;
                 waterGet = WaterLevel + quantity - WaterCapacity;
-                Console.WriteLine($"Excès d'eau récupéré : {waterGet}");
+                WaterLevel = WaterCapacity;
             } else
             {
-                TotalWaterLevel += WaterLevel;
                 WaterLevel += quantity;
             }
-            Console.WriteLine($"Quantité d'eau dans la citerne {Id} après ajout de {quantity} litres: {WaterLevel}/{WaterCapacity}");
             return waterGet;
         }
 
@@ -52,35 +93,30 @@ namespace Citerne.Classes
             int waterGet;
             if (WaterLevel - quantity < 0)
             {
-                TotalWaterLevel -= WaterLevel;
                 waterGet = WaterLevel;
-                Console.WriteLine($"Quantité d'eau récupéré : {WaterLevel}");
                 WaterLevel = 0;
             }
             else
             {
-                Console.WriteLine($"Quantité d'eau récupéré : {quantity}");
-                TotalWaterLevel -= quantity;
-                WaterLevel -= quantity;
                 waterGet = quantity;
+                WaterLevel -= quantity;
             }
-            Console.WriteLine($"Quantité d'eau dans la citerne {Id} après tentative de retrait de {quantity} litres: {WaterLevel}/{WaterCapacity}");
             return waterGet;
         }
 
-        public void ShowWaterLevel()
+        public override string ToString()
         {
-            Console.WriteLine($"Quantité d'eau dans la citerne {Id} : {WaterLevel}");
+            return $"La citerne {Id} à un poids à vide de {Weight}kg et contient {WaterLevel}/{WaterCapacity} litres d'eau";
         }
 
-        public void ShowWeight()
+        public bool IsEmpty()
         {
-            Console.WriteLine($"Poids total de la citerne {Id} : {GetTotalWeight()}");
+            return WaterLevel == 0;
         }
 
-        public static void ShowTotalWaterLevel()
+        public bool IsFull()
         {
-            Console.WriteLine($"Quantité d'eau dans toutes les citernes : {TotalWaterLevel}");
+            return WaterLevel == WaterCapacity;
         }
     }
 }
