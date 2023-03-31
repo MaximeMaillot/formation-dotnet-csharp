@@ -11,103 +11,128 @@
                 (3, "Ajouter de l'eau à une citerne"),
                 (4, "Retirer de l'eau à une citerne"),
                 (5, "Afficher le poids total d'une citerne"),
-                (6, "Afficher l'eau total dans les citernes")
+                (6, "Afficher l'eau total dans les citernes"),
+                (7, "Cas non implémenté"),
+                (999, "Quitter")
             };
-
+            (int num, string msg) exit = menu[menu.Count - 1];
             do
             {
                 ShowMenu(menu, "--- Gestion de citernes ---");
                 int choice = AskMenuChoice(menu);
                 Console.Clear();
-                if (waterTanks.Count == 0 && choice != 2)
+                if (!menu.Any((item) => item.num == choice) && choice != exit.num)
                 {
-                    Console.WriteLine("Pas de citernes");
+                    Console.WriteLine("Sélectionnez un nombre dans le menu.");
                     continue;
                 }
                 int id, quantity, waterGet;
                 WaterTank waterTank;
-                switch (choice)
+                if (choice == 1)
                 {
-                    case 1:
-                        Console.WriteLine("La liste des citernes :");
-                        foreach (var item in waterTanks)
+                    if (IsWaterTanksEmpty(waterTanks))
+                    {
+                        continue;
+                    }
+                    Console.WriteLine("La liste des citernes :");
+                    foreach (var item in waterTanks)
+                    {
+                        Console.WriteLine("\t" + item.ToString());
+                    }
+                }
+                else if (choice == 2)
+                {
+                    waterTanks.Add(AskUserWaterTank());
+                }
+                else if (choice == 3)
+                {
+                    if (IsWaterTanksEmpty(waterTanks))
+                    {
+                        continue;
+                    }
+                    id = AskUserWaterTankId(waterTanks);
+                    quantity = AskUserWaterQuantity("Quel quantité d'eau voulez-vous ajouter ? ");
+                    waterTank = GetWaterTankById(waterTanks, id);
+                    waterGet = waterTank.Fill(quantity);
+                    if (waterTank.IsFull())
+                    {
+                        Console.WriteLine($"La citerne {waterTank.Id} est déjà pleine : {waterTank.WaterLevel}/{waterTank.WaterCapacity}");
+                        Console.WriteLine($"Excès d'eau récupéré : {quantity}");
+                    }
+                    else
+                    {
+                        if (waterGet > 0)
                         {
-                            Console.WriteLine("\t" + item.ToString());
+                            Console.WriteLine($"Excès d'eau récupéré : {waterGet}");
                         }
-                        break;
-                    case 2:
-                        waterTanks.Add(AskUserWaterTank());
-                        break;
-                    case 3:
-                        id = AskUserWaterTankId(waterTanks);
-                        quantity = AskUserWaterQuantity("Quel quantité d'eau voulez-vous ajouter ? ");
-                        waterTank = GetWaterTankById(waterTanks, id);
-                        waterGet = waterTank.Fill(quantity);
-                        if (waterTank.IsFull())
+                        Console.WriteLine($"Quantité d'eau dans la citerne {waterTank.Id} après ajout de {quantity} litres: {waterTank.WaterLevel}/{waterTank.WaterCapacity}");
+                    }
+                }
+                else if (choice == 4)
+                {
+                    if (IsWaterTanksEmpty(waterTanks))
+                    {
+                        continue;
+                    }
+                    id = AskUserWaterTankId(waterTanks);
+                    quantity = AskUserWaterQuantity("Quel quantité d'eau voulez-vous retirer ? ");
+                    waterTank = GetWaterTankById(waterTanks, id);
+                    waterGet = waterTank.Drain(quantity);
+                    if (waterTank.IsEmpty())
+                    {
+                        Console.WriteLine($"La citerne {waterTank.Id} est déjà vide : {waterTank.WaterLevel}/{waterTank.WaterCapacity}");
+                        Console.WriteLine($"Quantité d'eau récupéré : {quantity}");
+                    }
+                    else
+                    {
+                        if (waterGet == quantity)
                         {
-                            Console.WriteLine($"La citerne {waterTank.Id} est déjà pleine : {waterTank.WaterLevel}/{waterTank.WaterCapacity}");
-                            Console.WriteLine($"Excès d'eau récupéré : {quantity}");
+                            Console.WriteLine($"Quantité d'eau dans la citerne {waterTank.Id} après retrait de {quantity} litres: {waterTank.WaterLevel}/{waterTank.WaterCapacity}");
+                            Console.WriteLine($"Quantité d'eau récupéré : {waterGet}");
                         }
                         else
                         {
-                            if (waterGet > 0)
-                            {
-                                Console.WriteLine($"Excès d'eau récupéré : {waterGet}");
-                            }
-                            Console.WriteLine($"Quantité d'eau dans la citerne {waterTank.Id} après ajout de {quantity} litres: {waterTank.WaterLevel}/{waterTank.WaterCapacity}");
+                            Console.WriteLine($"Quantité d'eau dans la citerne {waterTank.Id} après tentative de retrait de {quantity} litres: {waterTank.WaterLevel}/{waterTank.WaterCapacity}");
+                            Console.WriteLine($"Quantité d'eau récupéré : {waterGet}");
                         }
-                        break;
-                    case 4:
-                        id = AskUserWaterTankId(waterTanks);
-                        quantity = AskUserWaterQuantity("Quel quantité d'eau voulez-vous retirer ? ");
-                        waterTank = GetWaterTankById(waterTanks, id);
-                        waterGet = waterTank.Drain(quantity);
-                        if (waterTank.IsEmpty())
-                        {
-                            Console.WriteLine($"La citerne {waterTank.Id} est déjà vide : {waterTank.WaterLevel}/{waterTank.WaterCapacity}");
-                            Console.WriteLine($"Quantité d'eau récupéré : {quantity}");
-                        } else
-                        {
-                            if (waterGet == quantity)
-                            {
-                                Console.WriteLine($"Quantité d'eau dans la citerne {waterTank.Id} après retrait de {quantity} litres: {waterTank.WaterLevel}/{waterTank.WaterCapacity}");
-                                Console.WriteLine($"Quantité d'eau récupéré : {waterGet}");
-                            } else
-                            {
-                                Console.WriteLine($"Quantité d'eau dans la citerne {waterTank.Id} après tentative de retrait de {quantity} litres: {waterTank.WaterLevel}/{waterTank.WaterCapacity}");
-                                Console.WriteLine($"Quantité d'eau récupéré : {waterGet}");
-                            }
-                        }
-                        break;
-                    case 5:
-                        id = AskUserWaterTankId(waterTanks);
-                        waterTank = GetWaterTankById(waterTanks, id);
-                        Console.WriteLine($"Le poids total de cette citerne est : {waterTank.GetTotalWeight()}");
-                        break;
-                    case 6:
-                        Console.WriteLine($"Niveau total d'eau des citernes : {WaterTank.TotalWaterLevel}");
-                        break;
-                    case 0:
-                        return;
-                    default:
-                        if (menu.Any((item) => item.num == choice))
-                        {
-                            Console.WriteLine("Cas du menu non géré, contactez votre administrateur.");
-                        }
-                        break;
+                    }
                 }
-
+                else if (choice == 5)
+                {
+                    if (IsWaterTanksEmpty(waterTanks))
+                    {
+                        continue;
+                    }
+                    id = AskUserWaterTankId(waterTanks);
+                    waterTank = GetWaterTankById(waterTanks, id);
+                    Console.WriteLine($"Le poids total de cette citerne est de {waterTank.GetTotalWeight()}kg");
+                }
+                else if (choice == 6)
+                {
+                    if (IsWaterTanksEmpty(waterTanks))
+                    {
+                        continue;
+                    }
+                    Console.WriteLine($"Niveau total d'eau des citernes : {WaterTank.TotalWaterLevel}");
+                }
+                else if (choice == exit.num)
+                {
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("Cas du menu non géré");
+                }
             } while (true);
         }
 
-        private static void ShowMenu(List<(int num, string msg)> menu, string menuTitle = "--- Menu ---", string exitMsg = "Quitter")
+        private static void ShowMenu(List<(int num, string msg)> menu, string menuTitle = "--- Menu ---")
         {
             Console.WriteLine(menuTitle);
             foreach (var item in menu)
             {
                 Console.WriteLine($"{item.num}. {item.msg}");
             }
-            Console.WriteLine($"0.{exitMsg}");
         }
         private static int AskMenuChoice(List<(int num, string msg)> menu)
         {
@@ -213,6 +238,16 @@
                 }
             } while (!isCorrect);
             return quantity;
+        }
+
+        private static bool IsWaterTanksEmpty(List<WaterTank> waterTanks)
+        {
+            if (waterTanks.Count == 0)
+            {
+                Console.WriteLine("Pas de citernes");
+                return true;
+            }
+            return false;
         }
     }
 }
