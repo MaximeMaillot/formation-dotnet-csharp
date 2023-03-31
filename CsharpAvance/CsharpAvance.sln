@@ -13,7 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pendu", "Pendu\Pendu.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompteBancaire", "CompteBancaire\CompteBancaire.csproj", "{4E0873E2-1358-427E-870F-135C959FC8A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Citerne", "Citerne\Citerne.csproj", "{A6B532A2-75E2-481F-9602-2BDC384F5EC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Citerne", "Citerne\Citerne.csproj", "{A6B532A2-75E2-481F-9602-2BDC384F5EC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Figures", "Figures\Figures.csproj", "{7AFF98B1-0415-4EE7-AEBB-1C54AB10E861}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Employee", "Employee\Employee.csproj", "{EA339AC3-B09F-4AB4-8C45-4795FB866CB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,14 @@ Global
 		{A6B532A2-75E2-481F-9602-2BDC384F5EC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6B532A2-75E2-481F-9602-2BDC384F5EC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6B532A2-75E2-481F-9602-2BDC384F5EC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AFF98B1-0415-4EE7-AEBB-1C54AB10E861}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AFF98B1-0415-4EE7-AEBB-1C54AB10E861}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AFF98B1-0415-4EE7-AEBB-1C54AB10E861}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AFF98B1-0415-4EE7-AEBB-1C54AB10E861}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA339AC3-B09F-4AB4-8C45-4795FB866CB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA339AC3-B09F-4AB4-8C45-4795FB866CB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA339AC3-B09F-4AB4-8C45-4795FB866CB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA339AC3-B09F-4AB4-8C45-4795FB866CB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
