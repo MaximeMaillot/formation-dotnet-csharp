@@ -34,9 +34,10 @@ namespace Employee.Classes
                         switch (choiceSalarie)
                         {
                             case 1:
-                                AskUserSalarie();
+                                salaries.Add(AskUserSalarie());
                                 break;
                             case 2:
+                                salaries.Add(AskUserCommercial());
                                 break;
                             case 0:
                                 break;
