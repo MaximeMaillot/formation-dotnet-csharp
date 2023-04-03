@@ -1,1 +1,1 @@
-Dépendance de la classe Menu situé dans la solution Menu qui gère l'affichage des menus
+DÃ©pendance de la classe [Menu](https://github.com/MaximeMaillot/formation-dotnet-csharp/blob/main/CsharpAvance/Menu/Classes/Menu.cs) situÃ© dans la solution Menu qui gÃ¨re l'affichage des menus
