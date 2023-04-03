@@ -30,7 +30,7 @@ namespace CompteBancaire.Classes
                 int choice = Menu.Classes.Menu.AskMenuChoice(mainMenu);
                 int compteId, index;
                 bool isCorrect;
-                (bool success, string errorMsg) result;
+                (bool Success, string ErrorMsg) result;
                 Console.Clear();
                 switch (choice)
                 {
@@ -45,7 +45,6 @@ namespace CompteBancaire.Classes
                             foreach (BankAccount account in accounts)
                             {
                                 Console.WriteLine(account);
-                                //account.ShowAccount();
                             }
                         }
                         break;
@@ -69,6 +68,8 @@ namespace CompteBancaire.Classes
                                 break;
                             case 0:
                                 break;
+                            default:
+                                break;
                         }
                         break;
                     case 3:
@@ -79,9 +80,9 @@ namespace CompteBancaire.Classes
                         }
                         index = AskUserAccountId(accounts);
                         result = accounts[index].Deposit(AskUserDeposit());
-                        if (!result.success)
+                        if (!result.Success)
                         {
-                            Console.WriteLine(result.errorMsg);
+                            Console.WriteLine(result.ErrorMsg);
                         }
                         break;
                     case 4:
@@ -92,9 +93,9 @@ namespace CompteBancaire.Classes
                         }
                         index = AskUserAccountId(accounts);
                         result = accounts[index].Withdrawal(AskUserWithdrawal());
-                        if (!result.success)
+                        if (!result.Success)
                         {
-                            Console.WriteLine(result.errorMsg);
+                            Console.WriteLine(result.ErrorMsg);
                         }
                         break;
                     case 5:
@@ -135,7 +136,6 @@ namespace CompteBancaire.Classes
                     case 0:
                         return;
                     default:
-                        Console.WriteLine("Faut choisir une bonne valeur");
                         break;
                 }
             } while (true);
@@ -166,33 +166,33 @@ namespace CompteBancaire.Classes
             return accounts.Count == 0;
         }
 
-        private static int AskUserWithdrawal()
+        private static decimal AskUserWithdrawal()
         {
-            int withdrawal;
+            decimal withdrawal;
             bool isCorrect;
             do
             {
-                Console.Write("Combien voulez-vous retirer (entrez un nombre entier) : ");
-                isCorrect = int.TryParse(Console.ReadLine(), out withdrawal);
+                Console.Write("Combien voulez-vous retirer : ");
+                isCorrect = decimal.TryParse(Console.ReadLine(), out withdrawal);
                 if (!isCorrect || withdrawal <= 0)
                 {
-                    Console.WriteLine("Rentrez un chiffre supérieur ou égal à 0");
+                    Console.WriteLine("Rentrez un chiffre supérieur à 0");
                 }
             } while (!isCorrect);
             return withdrawal;
         }
 
-        private static int AskUserDeposit()
+        private static decimal AskUserDeposit()
         {
             bool isCorrect;
-            int deposit;
+            decimal deposit;
             do
             {
-                Console.Write("Combien voulez-vous déposer (entrez un nombre entier) : ");
-                isCorrect = int.TryParse(Console.ReadLine(), out deposit);
+                Console.Write("Combien voulez-vous déposer : ");
+                isCorrect = decimal.TryParse(Console.ReadLine(), out deposit);
                 if (!isCorrect || deposit <= 0)
                 {
-                    Console.WriteLine("Rentrez un chiffre supérieur ou égal à 0");
+                    Console.WriteLine("Rentrez un chiffre supérieur à 0");
                     isCorrect = false;
                 }
             } while (!isCorrect);
@@ -221,15 +221,15 @@ namespace CompteBancaire.Classes
             return index;
         }
 
-        private static int AskUserInterestRate()
+        private static float AskUserInterestRate()
         {
             bool isCorrect;
-            int interestRate;
+            float interestRate;
             do
             {
                 Console.Write("Quel est le taux d'intérêts du compte épargne ? ");
-                isCorrect = int.TryParse(Console.ReadLine(), out interestRate);
-                if (!isCorrect || interestRate <= 0)
+                isCorrect = float.TryParse(Console.ReadLine(), out interestRate);
+                if (!isCorrect || interestRate < 0)
                 {
                     Console.WriteLine("Rentrez un chiffre supérieur ou égal à 0");
                     isCorrect = false;
@@ -238,15 +238,15 @@ namespace CompteBancaire.Classes
             return interestRate;
         }
 
-        private static int AskUserTax()
+        private static decimal AskUserTax()
         {
             bool isCorrect;
-            int tax;
+            decimal tax;
             do
             {
                 Console.Write("Quel est la taxe de retrait sur le compte payant ? ");
-                isCorrect = int.TryParse(Console.ReadLine(), out tax);
-                if (!isCorrect || tax <= 0)
+                isCorrect = decimal.TryParse(Console.ReadLine(), out tax);
+                if (!isCorrect || tax < 0)
                 {
                     Console.WriteLine("Rentrez un chiffre supérieur ou égal à 0");
                     isCorrect = false;
@@ -263,9 +263,9 @@ namespace CompteBancaire.Classes
             {
                 Console.Write("Combien d'années d'intérêts voulez-vous calculer ? ");
                 isCorrect = int.TryParse(Console.ReadLine(), out years);
-                if (!isCorrect || years <= 0)
+                if (!isCorrect || years < 1)
                 {
-                    Console.WriteLine("Rentrez un chiffre supérieur ou égal à 0");
+                    Console.WriteLine("Rentrez un chiffre supérieur ou égal à 1");
                     isCorrect = false;
                 }
             } while (!isCorrect);

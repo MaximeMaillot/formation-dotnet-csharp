@@ -8,8 +8,8 @@ namespace CompteBancaire.Classes.Comptes
 {
     internal class SavingAccount : BankAccount
     {
-        private int _interestRatePct;
-        public int InterestRatePct
+        private float _interestRatePct;
+        public float InterestRatePct
         {
             get => _interestRatePct; set
             {
@@ -22,7 +22,7 @@ namespace CompteBancaire.Classes.Comptes
                 }
             }
         }
-        public SavingAccount(Client client, int interestRatePct) : base(client)
+        public SavingAccount(Client client, float interestRatePct) : base(client)
         {
             InterestRatePct = interestRatePct;
         }
@@ -33,12 +33,12 @@ namespace CompteBancaire.Classes.Comptes
             return $"Compte Epargne avex taux d'intérêts à {InterestRatePct}% : {base.ToString()} euros";
         }
 
-        public int CalculateInterest(int years)
+        public decimal CalculateInterest(int years)
         {
-            int interest = 0;
+            decimal interest = 0m;
             for (int i = 0; i < years; i++)
             {
-                interest += (interest + Solde) * InterestRatePct / 100;
+                interest += (interest + Solde) * (decimal)InterestRatePct / 100m;
             }
             return interest;
         }

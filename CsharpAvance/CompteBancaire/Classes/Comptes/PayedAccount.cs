@@ -8,8 +8,8 @@ namespace CompteBancaire.Classes.Comptes
 {
     internal class PayedAccount : BankAccount
     {
-        private int _tax;
-        public int Tax
+        private decimal _tax;
+        public decimal Tax
         {
             get => _tax; set
             {
@@ -22,7 +22,7 @@ namespace CompteBancaire.Classes.Comptes
                 }
             }
         }
-        public PayedAccount(Client client, int tax) : base(client)
+        public PayedAccount(Client client, decimal tax) : base(client)
         {
             Tax = tax;
         }
@@ -32,7 +32,7 @@ namespace CompteBancaire.Classes.Comptes
             return $"Compte Payant avec taxe de {Tax} : {base.ToString()}";
         }
 
-        public override (bool, string) Withdrawal(int amount)
+        public override (bool Success, string ErrorMsg) Withdrawal(decimal amount)
         {
             return base.Withdrawal(amount + Tax);
         }

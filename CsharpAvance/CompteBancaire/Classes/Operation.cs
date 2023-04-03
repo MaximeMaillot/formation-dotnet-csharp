@@ -10,13 +10,13 @@ namespace CompteBancaire.Classes
     {
         private static int _Number { get; set; } = 1;
         public int Number { get; set; }
-        public int Amount { get; set; }
+        public decimal Amount { get; set; }
         public OperationStatus Status { get; set; }
 
         private Operation() {
             Number = _Number++;
         }
-        public Operation(int amount, OperationStatus status):this()
+        public Operation(decimal amount, OperationStatus status):this()
         {
             Amount = amount;
             Status = status;

@@ -10,7 +10,7 @@ namespace CompteBancaire.Classes.Comptes
     {
         private static int GlobalId { get; set; } = 1;
         public int Id { get; private set; }
-        public int Solde { get; set; } = 0;
+        public decimal Solde { get; set; } = 0;
         public Client Client { get; set; }
         public List<Operation> Operations { get; set; } = new List<Operation>();
 
@@ -28,7 +28,7 @@ namespace CompteBancaire.Classes.Comptes
             return $"numéro {Id} pour {Client.FirstName} {Client.LastName} à un solde de {Solde} euros";
         }
 
-        public (bool success, string errorMsg) Deposit(int amount)
+        public (bool success, string errorMsg) Deposit(decimal amount)
         {
             if (amount < 0)
             {
@@ -39,7 +39,7 @@ namespace CompteBancaire.Classes.Comptes
             return (true, "");
         }
 
-        public virtual (bool success, string errorMsg) Withdrawal(int amount)
+        public virtual (bool Success, string ErrorMsg) Withdrawal(decimal amount)
         {
             if (amount < 0)
             {
