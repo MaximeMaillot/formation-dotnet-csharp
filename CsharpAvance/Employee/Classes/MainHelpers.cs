@@ -1,9 +1,10 @@
 ﻿using Employee.Classes;
+using System.Collections.Generic;
 
 internal static class MainHelpers
 {
 
-    private static int AskMenuChoice(List<(int num, string msg)> menu)
+    public static int AskMenuChoice(List<(int num, string msg)> menu)
     {
         int choice;
         bool isCorrect;
@@ -23,7 +24,7 @@ internal static class MainHelpers
         return choice;
     }
 
-    private static string AskUserCategorie()
+    public static string AskUserCategorie()
     {
         string categorie;
         do
@@ -38,7 +39,7 @@ internal static class MainHelpers
         return categorie.Trim();
     }
 
-    private static int AskUserChiffreAffaires()
+    public static int AskUserChiffreAffaires()
     {
         bool isCorrect;
         int chiffreAffaires;
@@ -55,7 +56,7 @@ internal static class MainHelpers
         return chiffreAffaires;
     }
 
-    private static int AskUserComission()
+    public static int AskUserComission()
     {
         bool isCorrect;
         int comission;
@@ -73,12 +74,12 @@ internal static class MainHelpers
     }
 
 
-    private static Commercial AskUserCommercial()
+    public static Commercial AskUserCommercial()
     {
         return new Commercial(AskUserSalarie(), AskUserChiffreAffaires(), AskUserComission());
     }
 
-    private static string AskUserMatricule()
+    public static string AskUserMatricule()
     {
         string matricule;
         do
@@ -93,7 +94,7 @@ internal static class MainHelpers
         return matricule.Trim();
     }
 
-    private static string AskUserName()
+    public static string AskUserName()
     {
         string name;
         do
@@ -108,7 +109,7 @@ internal static class MainHelpers
         return name.Trim();
     }
 
-    private static int AskUserSalaire()
+    public static int AskUserSalaire()
     {
         bool isCorrect;
         int salaire;
@@ -125,12 +126,12 @@ internal static class MainHelpers
         return salaire;
     }
 
-    private static Salarie AskUserSalarie()
+    public static Salarie AskUserSalarie()
     {
         return new Salarie(AskUserName(), AskUserSalaire(), AskUserMatricule(), AskUserCategorie(), AskUserService());
     }
 
-    private static Salarie askUserSalarieByName(List<Salarie> salaries)
+    public static Salarie askUserSalarieByName(List<Salarie> salaries)
     {
         string name;
         do
@@ -148,7 +149,7 @@ internal static class MainHelpers
         return salaries.Find(salarie => salarie.Nom.ToLower().StartsWith(name));
     }
 
-    private static string AskUserService()
+    public static string AskUserService()
     {
         string service;
         do
@@ -163,12 +164,17 @@ internal static class MainHelpers
         return service.Trim();
     }
 
-    private static bool isSalariesEmpty(List<Salarie> salaries)
+    public static bool isSalariesEmpty(List<Salarie> salaries)
     {
         return salaries.Count == 0;
     }
 
-    private static void ShowMenu(List<(int num, string msg)> menu, string menuTitle = "--- Menu ---")
+    public static bool isSalariesFull(List<Salarie> salaries)
+    {
+        return salaries.Count >= 20;
+    }
+
+    public static void ShowMenu(List<(int num, string msg)> menu, string menuTitle = "--- Menu ---")
     {
         Console.WriteLine(menuTitle);
         foreach (var item in menu)

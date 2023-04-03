@@ -33,6 +33,11 @@ namespace Employee.Classes
                 switch (choice)
                 {
                     case 1:
+                        if (MainHelpers.isSalariesFull(salaries))
+                        {
+                            Console.WriteLine("La liste des salariés est pleine");
+                            break;
+                        }
                         MainHelpers.ShowMenu(salarieMenu);
                         int choiceSalarie = MainHelpers.AskMenuChoice(salarieMenu);
                         switch (choiceSalarie)
