@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Employee.Classes
 {
@@ -12,7 +13,7 @@ namespace Employee.Classes
         {
             List<(int num, string msg)> mainMenu = new() {
                 (1, "Ajouter un employé"),
-                (2, "Afficher le salaire de l'employé"),
+                (2, "Afficher le salaire des employés"),
                 (3, "Rechercher un employé"),
                 (0, "Quitter")
             };
@@ -26,6 +27,8 @@ namespace Employee.Classes
             {
                 ShowMenu(mainMenu);
                 int choice = AskMenuChoice(mainMenu);
+                Console.Clear();
+                Salarie salarie;
                 switch (choice)
                 {
                     case 1:
@@ -46,8 +49,26 @@ namespace Employee.Classes
                         }
                         break;
                     case 2:
+                        if (isSalariesEmpty(salaries))
+                        {
+                            Console.WriteLine("La liste des salariés est vide");
+                            break;
+                        }
+                        foreach (Salarie s in salaries)
+                        {
+                            Console.WriteLine("------------------");
+                            Console.WriteLine(s.GetSalaireString());
+                            Console.WriteLine("------------------");
+                        }
                         break;
                     case 3:
+                        if (isSalariesEmpty(salaries))
+                        {
+                            Console.WriteLine("La liste des salariés est vide");
+                            break;
+                        }
+                        salarie = askUserSalarieByName(salaries);
+                        Console.WriteLine(salarie.GetSalaireString());
                         break;
                     case 0:
                         return;
@@ -73,7 +94,7 @@ namespace Employee.Classes
             do
             {
                 Console.Write("Votre choix : ");
-                isCorrect = int.TryParse(Console.ReadLine(), out choice);
+                isCorrect = int.TryParse(Console.ReadLine().Trim(), out choice);
                 if (!isCorrect)
                 {
                     Console.WriteLine("Rentrez une valeur numérique");
@@ -88,8 +109,17 @@ namespace Employee.Classes
 
         private static string AskUserName()
         {
-            Console.Write("Merci de saisir le nom : ");
-            return Console.ReadLine();
+            string name;
+            do
+            {
+                Console.Write("Merci de saisir le nom : ");
+                name = Console.ReadLine();
+                if (string.IsNullOrEmpty(name))
+                {
+                    Console.WriteLine("Entrez un nom");
+                }
+            } while (string.IsNullOrEmpty(name));
+            return name.Trim();
         }
 
         private static int AskUserSalaire()
@@ -99,7 +129,7 @@ namespace Employee.Classes
             do
             {
                 Console.Write("Merci de saisir le salaire : ");
-                isCorrect = int.TryParse(Console.ReadLine(), out salaire);
+                isCorrect = int.TryParse(Console.ReadLine().Trim(), out salaire);
                 if (isCorrect && salaire <= 0)
                 {
                     isCorrect = false;
@@ -111,20 +141,47 @@ namespace Employee.Classes
 
         private static string AskUserMatricule()
         {
-            Console.Write("Merci de saisir le matricule : ");
-            return Console.ReadLine();
+            string matricule;
+            do
+            {
+                Console.Write("Merci de saisir le matricule : ");
+                matricule = Console.ReadLine();
+                if (string.IsNullOrEmpty(matricule))
+                {
+                    Console.WriteLine("Entrez un matricule");
+                }
+            } while (string.IsNullOrEmpty(matricule));
+            return matricule.Trim();
         }
 
         private static string AskUserCategorie()
         {
-            Console.Write("Merci de saisir la catégorie : ");
-            return Console.ReadLine();
+            string categorie;
+            do
+            {
+                Console.Write("Merci de saisir la catégorie : ");
+                categorie = Console.ReadLine();
+                if (string.IsNullOrEmpty(categorie))
+                {
+                    Console.WriteLine("Entrez un catégorie");
+                }
+            } while (string.IsNullOrEmpty(categorie));
+            return categorie.Trim();
         }
 
         private static string AskUserService()
         {
-            Console.Write("Merci de saisir le service : ");
-            return Console.ReadLine();
+            string service;
+            do
+            {
+                Console.Write("Merci de saisir le service : ");
+                service = Console.ReadLine();
+                if (string.IsNullOrEmpty(service))
+                {
+                    Console.WriteLine("Entrez un service");
+                }
+            } while (string.IsNullOrEmpty(service));
+            return service.Trim();
         }
 
         private static Salarie AskUserSalarie()
@@ -139,7 +196,7 @@ namespace Employee.Classes
             do
             {
                 Console.Write("Merci de saisir le chiffre d'affaires : ");
-                isCorrect = int.TryParse(Console.ReadLine(), out chiffreAffaires);
+                isCorrect = int.TryParse(Console.ReadLine().Trim(), out chiffreAffaires);
                 if (isCorrect && chiffreAffaires <= 0)
                 {
                     isCorrect = false;
@@ -156,7 +213,7 @@ namespace Employee.Classes
             do
             {
                 Console.Write("Merci de saisir la comission : ");
-                isCorrect = int.TryParse(Console.ReadLine(), out comission);
+                isCorrect = int.TryParse(Console.ReadLine().Trim(), out comission);
                 if (isCorrect && comission <= 0)
                 {
                     isCorrect = false;
@@ -170,6 +227,28 @@ namespace Employee.Classes
         private static Commercial AskUserCommercial()
         {
             return new Commercial(AskUserSalarie(), AskUserChiffreAffaires(), AskUserComission());
+        }
+
+        private static Salarie askUserSalarieByName(List<Salarie> salaries)
+        {
+            string name;
+            do
+            {
+                name = AskUserName().ToLower();
+                if (!salaries.Any(salarie => salarie.Nom.ToLower().StartsWith(name)))
+                {
+                    Console.WriteLine("Le salarié n'existe pas");
+                } else
+                {
+                    break;
+                }
+            } while (true);
+            return salaries.Find(salarie => salarie.Nom.ToLower().StartsWith(name));
+        }
+
+        private static bool isSalariesEmpty(List<Salarie> salaries)
+        {
+            return salaries.Count == 0;
         }
     }
 }

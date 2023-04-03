@@ -9,8 +9,8 @@ namespace Employee.Classes
 {
     internal class Commercial : Salarie
     {
-        public int ChiffreAffaires { get; set; } = 0;
-        public int Comission { get; set; } = 0;
+        public int ChiffreAffaires { get; private set; } = 0;
+        public int Comission { get; private set; } = 0;
 
         public Commercial(Salarie salarie, int chiffreAffaires, int comission) : base(salarie.Nom, salarie.Salaire, salarie.Matricule, salarie.Categorie, salarie.Service)
         {
@@ -20,7 +20,7 @@ namespace Employee.Classes
 
         public override string GetSalaireString()
         {
-            return $"Le salaire de {Nom} est de {Salaire + (ChiffreAffaires * Comission / 100)} euros";
+            return base.GetSalaireString() + "\n" + $"Le salaire avec comission de {Nom} est de {Salaire + (ChiffreAffaires * Comission / 100)} euros"; ;
         }
 
         public override string ToString()
