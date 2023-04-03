@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Employee", "Employee\Employ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaPile", "LaPile\LaPile.csproj", "{43B9D83B-926D-457A-B915-E605C842B3F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Menu", "Menu\Menu.csproj", "{EFAF6D98-C56D-417F-BE7A-AF04C2E82366}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{43B9D83B-926D-457A-B915-E605C842B3F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43B9D83B-926D-457A-B915-E605C842B3F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43B9D83B-926D-457A-B915-E605C842B3F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFAF6D98-C56D-417F-BE7A-AF04C2E82366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFAF6D98-C56D-417F-BE7A-AF04C2E82366}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFAF6D98-C56D-417F-BE7A-AF04C2E82366}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFAF6D98-C56D-417F-BE7A-AF04C2E82366}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

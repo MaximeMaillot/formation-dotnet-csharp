@@ -1,0 +1,1 @@
+Dépendance de la classe Menu situé dans la solution Menu qui gère l'affichage des menus

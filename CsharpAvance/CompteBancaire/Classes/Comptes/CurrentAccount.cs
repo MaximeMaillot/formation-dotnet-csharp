@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CompteBancaire.Classes
+namespace CompteBancaire.Classes.Comptes
 {
     internal class CurrentAccount : BankAccount
     {
         public CurrentAccount(Client client) : base(client) { }
-        public override void ShowAccount()
+        public override string ToString()
         {
-            Console.WriteLine($"Compte Courant : " + base.ToString());
+            return $"Compte Courant : {base.ToString()}";
         }
     }
 }
