@@ -130,7 +130,7 @@ namespace CompteBancaire.Classes
                         }
                         int years = AskUserNbYears();
                         SavingAccount epargne = (SavingAccount)accounts[index];
-                        Console.WriteLine($"Intérêts au bout de {years} ans sur ce compte épargne : {epargne.calculateInterest(years)}");
+                        Console.WriteLine($"Intérêts au bout de {years} ans sur ce compte épargne : {epargne.CalculateInterest(years)}");
                         break;
                     case 0:
                         return;

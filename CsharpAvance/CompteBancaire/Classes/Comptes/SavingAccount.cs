@@ -33,7 +33,7 @@ namespace CompteBancaire.Classes.Comptes
             return $"Compte Epargne avex taux d'intérêts à {InterestRatePct}% : {base.ToString()} euros";
         }
 
-        public int calculateInterest(int years)
+        public int CalculateInterest(int years)
         {
             int interest = 0;
             for (int i = 0; i < years; i++)
