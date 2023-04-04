@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Figures.Interfaces;
+﻿using Figures.Interfaces;
 
 namespace Figures.Classes
 {
@@ -24,7 +18,8 @@ namespace Figures.Classes
 
         public virtual void Deplacement(double posX, double posY)
         {
-            throw new NotImplementedException();
+            Origine.PosX += posX;
+            Origine.PosY += posY;
         }
 
         public override string ToString()
