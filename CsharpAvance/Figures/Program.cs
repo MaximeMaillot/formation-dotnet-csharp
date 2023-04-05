@@ -6,28 +6,31 @@ List<Figure> figures = new()
     new Rectangle(new Point(0,11), 10, 2),
     new Triangle(new Point(-6.5,-9), 10, 5),
     new Rectangle(new Point(-11.5,6), 25, 10),
-    new Carre(new Point(-11.5, 13.5), 25)
+    new Carre(new Point(-11.5, 13.5), 25),
+    new Carre(2, 4, 2),
+    new Rectangle(2, 4, 3, 5),
+    new Triangle(2, 4, 4, 5),
 };
 
 foreach(Figure figure in figures)
 {
     if (figure is Carre)
     {
-        Console.WriteLine("Coordonnées du carré ABCD : ");
-        Carre carre = figure as Carre;
+        Carre? carre = figure as Carre;
         Console.WriteLine(carre);
+        //carre.Dessiner();
     }
     else if (figure is Rectangle)
     {
-        Console.WriteLine("Coordonnées du rectangle ABCD : ");
-        Rectangle rectangle = figure as Rectangle;
+        Rectangle? rectangle = figure as Rectangle;
         Console.WriteLine(rectangle);
+        //rectangle.Dessiner();
     }
     else if (figure is Triangle)
     {
-        Console.WriteLine("Coordonnées du triangle ABC : ");
-        Triangle triangle = figure as Triangle;
+        Triangle? triangle = figure as Triangle;
         Console.WriteLine(triangle);
+        //triangle.Dessiner();
     }
     else
     {
