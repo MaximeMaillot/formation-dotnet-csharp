@@ -4,7 +4,7 @@
     {
         private Client()
         {
-            Numero = NumeroStatic++;
+            Numero = ++NbClients;
         }
         public Client(string nom, string prenom, string numTel):this()
         {
@@ -12,7 +12,7 @@
             Prenom = prenom;
             NumTel = numTel;
         }
-        private static int NumeroStatic { get; set; } = 1;
+        private static int NbClients { get; set; }
         public int Numero { get; set; }
         public string Nom { get; set; }
 
@@ -20,12 +20,9 @@
 
         public string NumTel{get;set;}
 
-        /// <summary>
-        /// Show a client
-        /// </summary>
-        public void ShowClient()
+        public override string ToString()
         {
-            Console.WriteLine($"Client N°{Numero} : {Prenom} {Nom}, Téléphone : {NumTel}");
+            return $"Client N°{Numero} : {Prenom} {Nom}, Téléphone : {NumTel}";
         }
     }
 }

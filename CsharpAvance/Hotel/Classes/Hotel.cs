@@ -5,7 +5,6 @@
         public Hotel(string nom)
         {
             Nom = nom;
-            Console.WriteLine($"{nom} a été créer avec succès !");
         }
         public string Nom { get; set; }
         public List<Client> Clients { get; private set; } = new List<Client>();
@@ -19,83 +18,11 @@
         public void AddClient(Client client)
         {
             Clients.Add(client);
-            Console.WriteLine("Client ajouté avec succès");
         }
 
-        /// <summary>
-        /// Show all clients in the hotel
-        /// </summary>
-        public void ShowClients()
+        public List<Reservation> GetReservationsByClient(Client client)
         {
-            if (!HasClients())
-            {
-                HotelConsole.WriteInColor("Pas de clients", ConsoleColor.Red);
-                return;
-            }
-            foreach (Client client in Clients)
-            {
-                client.ShowClient();
-            }
-        }
-
-        /// <summary>
-        /// Show all reservations of a client
-        /// </summary>
-        /// <param name="client"></param>
-        public void ShowReservationsByClient(Client client)
-        {
-            foreach (Reservation reservation in Reservations)
-            {
-                if (reservation.Client == client)
-                {
-                    reservation.ShowReservations();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Get all reservations of a client
-        /// </summary>
-        /// <param name="numero"></param>
-        /// <returns></returns>
-        public List<Reservation> getReservationsByClientNumero(int numero)
-        {
-            return Reservations.FindAll((reservation) => reservation.Numero == numero);
-        }
-
-        /// <summary>
-        /// Show all reservations of a client by its numero
-        /// </summary>
-        /// <param name="numero"></param>
-        public void ShowReservationsByClientNumero(int numero)
-        {
-            List<Reservation> reservationList = getReservationsByClientNumero(numero);
-            if (reservationList.Count == 0) {
-                HotelConsole.WriteInColor("Aucune réservation pour ce client", ConsoleColor.Red);
-                return;
-            }
-            foreach (Reservation reservation in Reservations)
-            {
-                if (reservation.Client.Numero == numero)
-                {
-                    reservation.ShowReservations();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Show all reservations
-        /// </summary>
-        public void ShowReservations()
-        {
-            if (!HasReservations())
-            {
-                HotelConsole.WriteInColor("Pas de réservations", ConsoleColor.Red);
-            }
-            foreach (Reservation reservation in Reservations)
-            {
-                reservation.ShowReservations();
-            }
+            return Reservations.Where(reservation =>  reservation.Client == client).ToList();
         }
 
         /// <summary>
@@ -105,7 +32,6 @@
         public void AddReservation(Reservation reservation)
         {
             Reservations.Add(reservation);
-            HotelConsole.WriteInColor("Reservation ajouté avec succès", ConsoleColor.Green);
         }
 
         /// <summary>
@@ -115,7 +41,31 @@
         public void RemoveReservation(Reservation reservation)
         {
             Reservations.Remove(reservation);
-            HotelConsole.WriteInColor("Reservation annulé avec succès", ConsoleColor.Green);
+        }
+
+        public void CancelReservation(Reservation reservation)
+        {
+            int index = Reservations.FindIndex(r => r.Numero == reservation.Numero);
+            if (index == -1)
+            {
+                throw new Exception("Reservation not found");
+            } else
+            {
+                Reservations[index].Cancel();
+            }
+        }
+
+        public void CancelReservation(int numero)
+        {
+            int index = Reservations.FindIndex(r => r.Numero == numero);
+            if (index == -1)
+            {
+                throw new Exception("Reservation not found");
+            }
+            else
+            {
+                Reservations[index].Cancel();
+            }
         }
 
         /// <summary>
@@ -131,7 +81,7 @@
         /// Check if the hostel has clients
         /// </summary>
         /// <returns></returns>
-        public bool HasClients()
+        public bool HasClient()
         {
             return Clients.Count > 0;
         }
@@ -140,7 +90,7 @@
         /// Check if the hostel has reservations
         /// </summary>
         /// <returns></returns>
-        public bool HasReservations()
+        public bool HasReservation()
         {
             return Reservations.Count > 0;
         }
@@ -149,9 +99,19 @@
         /// Check if the hostel has chambers
         /// </summary>
         /// <returns></returns>
-        public bool hasChambres()
+        public bool HasChambre()
         {
             return Chambres.Count > 0;
+        }
+
+        public bool HasChambreOpen()
+        {
+            return Chambres.Any(chambre => chambre.Statut == ChambreStatut.Libre);
+        }
+
+        public int GetNbChambreOpen() 
+        {
+            return Chambres.Count(chambre => chambre.Statut == ChambreStatut.Libre);
         }
 
         /// <summary>

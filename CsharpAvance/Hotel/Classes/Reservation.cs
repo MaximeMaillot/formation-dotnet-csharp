@@ -2,43 +2,73 @@
 {
     internal class Reservation
     {
-        private static int NumeroStatic { get; set; } = 1;
+        private static int NbReservations { get; set; }
         public int Numero { get; set; }
-        public string Statut { get; set; }
+        public ReservationStatut Statut { get; set; }
         public List<Chambre> Chambres { get; set; } = new List<Chambre>();
         public Client Client { get; set; }
         private Reservation()
         {
-            Numero = NumeroStatic++;
+            Numero = ++NbReservations;
         }
-        private Reservation(Client client, string statut) :this()
+        private Reservation(Client client, ReservationStatut statut) :this()
         {
             Statut = statut;
             Client = client;
         }
-        public Reservation(List<Chambre> chambres, Client client, string statut = "Open") :this(client, statut) 
+        public Reservation(List<Chambre> chambres, Client client, ReservationStatut statut = ReservationStatut.Prevu) :this(client, statut) 
         {
-            Chambres = chambres;
+            if (Chambres.All(chambre => chambre.Statut == ChambreStatut.Libre))
+            {
+                Chambres = chambres;
+                foreach (var chambre in Chambres)
+                {
+                    chambre.UpdateChambreStatut(ChambreStatut.Occupe);
+                }
+            } else
+            {
+                throw new Exception("All chambres are not open");
+            }
         }
-        public Reservation(Chambre chambre, Client client, string statut = "Open") :this(client, statut)
+        public Reservation(Chambre chambre, Client client, ReservationStatut statut = ReservationStatut.Prevu ) :this(client, statut)
         {
-            Chambres.Add(chambre);
+            if (chambre.Statut != ChambreStatut.Libre)
+            {
+                throw new Exception("Chambre is not open");
+            } else
+            {
+                Chambres.Add(chambre);
+                chambre.UpdateChambreStatut(ChambreStatut.Occupe);
+            }
         }
 
-        /// <summary>
-        /// Show the chambers reserved by the client
-        /// </summary>
-        public void ShowReservations()
+        public void Cancel()
         {
-            if (Chambres.Count == 0) {
-                HotelConsole.WriteInColor("Pas de réservations", ConsoleColor.Red);
-                return;
-            }
-            Console.WriteLine($"Pour le Client N°{Client.Numero} :");
-            foreach (Chambre chambre in Chambres)
+            Statut = ReservationStatut.Annule;
+            foreach (var chambre in Chambres)
             {
-                Console.WriteLine($"\tReservation N°{Numero} avec pour statut : {Statut} ");
+                chambre.UpdateChambreStatut(ChambreStatut.Libre);
             }
         }
+
+        public void End()
+        {
+            Statut = ReservationStatut.Fini;
+            foreach (var chambre in Chambres)
+            {
+                chambre.UpdateChambreStatut(ChambreStatut.EnNottoyage);
+            }
+        }
+
+        public override string ToString()
+        {
+            return $"Reservation N°{Numero} avec statut {Statut}";
+        }
+    }
+    public enum ReservationStatut {
+        Prevu,
+        EnCours,
+        Fini,
+        Annule
     }
 }
