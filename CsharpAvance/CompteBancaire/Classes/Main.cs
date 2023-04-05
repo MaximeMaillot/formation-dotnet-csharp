@@ -28,8 +28,7 @@ namespace CompteBancaire.Classes
             {
                 Menu.Classes.Menu.ShowMenu(mainMenu, "=== Menu Principal ===\n");
                 int choice = Menu.Classes.Menu.AskMenuChoice(mainMenu);
-                int compteId, index;
-                bool isCorrect;
+                int index;
                 (bool Success, string ErrorMsg) result;
                 Console.Clear();
                 switch (choice)
