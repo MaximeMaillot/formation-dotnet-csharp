@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Menu.Struct;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,10 @@ namespace Menu.Classes
                 {
                     Console.WriteLine("Rentrez une valeur numérique");
                 }
-                if (!menu.Any(item => item.num == choice))
+                else if (!menu.Any(item => item.num == choice))
                 {
                     Console.WriteLine("Rentrez une valeur présent dans le menu");
+                    isCorrect = false;
                 }
             } while (!isCorrect);
             return choice;
