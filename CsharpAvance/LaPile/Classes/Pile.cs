@@ -1,37 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
 
 namespace LaPile.Classes
 {
-    internal class Pile<T>
+    internal class Pile<T> : IEnumerable
     {
-        List<T> items = new List<T> ();
+        private List<T> _items = new List<T> ();
+        public List<T> Items { get { return _items; } }
+
+        public Pile (){}
 
         public void Push (T item)
         {
-            Console.WriteLine($"Add : {item}");
-            items.Add(item);
+            _items.Add(item);
         }
 
         public void Pop ()
         {
-            Console.WriteLine($"Remove : {items[items.Count - 1]}");
-            items.RemoveAt(items.Count - 1);
+            _items.RemoveAt(_items.Count - 1);
         }
 
-        public object Get (int index)
+        public T Get (int index)
         {
-            T item = items[index];
-            items.RemoveAt(index);
+            T item = _items[index];
+            _items.RemoveAt(index);
             return item;
         }
 
         public override string ToString()
         {
             return $"Pile : {base.ToString()}";
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            return _items.GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return _items.GetEnumerator();
         }
     }
 }
