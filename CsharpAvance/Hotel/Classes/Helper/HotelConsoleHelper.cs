@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hostel.Classes
+namespace Hostel.Classes.Helper
 {
-    internal static class HotelConsole
+    internal static class HotelConsoleHelper
     {
         /// <summary>
         /// Write a message in the console with a certain color

@@ -38,5 +38,30 @@ namespace Menu.Classes
                 Console.WriteLine($"{item.num}. {item.msg}");
             }
         }
+
+        public static void HandleIHM(List<(int num, string msg, Action action)> menu, string menuTitle = "--- Menu ---", bool isLooping = true)
+        {
+            List<(int num, string msg)> menuSimplified = new();
+            menu.ForEach(item => menuSimplified.Add((item.num, item.msg)));
+            do
+            {
+                Menu.ShowMenu(menuSimplified, menuTitle);
+                int choice = Menu.AskMenuChoice(menuSimplified);
+                Console.Clear();
+                var menuChoice = menu.FirstOrDefault(m => m.num == choice);
+                if (menuChoice == default((int, string, Action)))
+                {
+                    throw new Exception("Choice not in the menu");
+                }
+                else if (menuChoice.action == null)
+                {
+                    return;
+                }
+                else
+                {
+                    menuChoice.action();
+                }
+            } while (isLooping);
+        }
     }
 }

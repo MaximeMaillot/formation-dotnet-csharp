@@ -3,25 +3,25 @@
     internal class Reservation
     {
         private static int NbReservations { get; set; }
-        public int Numero { get; set; }
-        public ReservationStatut Statut { get; set; }
-        public List<Chambre> Chambres { get; set; } = new List<Chambre>();
-        public Client Client { get; set; }
+        public int NumeroReservation { get; set; }
+        public ReservationStatut StatutReservation { get; set; }
+        public List<Chambre> ChambresReservations { get; set; } = new List<Chambre>();
+        public Client ClientReservation { get; set; }
         private Reservation()
         {
-            Numero = ++NbReservations;
+            NumeroReservation = ++NbReservations;
         }
         private Reservation(Client client, ReservationStatut statut) :this()
         {
-            Statut = statut;
-            Client = client;
+            StatutReservation = statut;
+            ClientReservation = client;
         }
         public Reservation(List<Chambre> chambres, Client client, ReservationStatut statut = ReservationStatut.Prevu) :this(client, statut) 
         {
-            if (Chambres.All(chambre => chambre.Statut == ChambreStatut.Libre))
+            if (ChambresReservations.All(chambre => chambre.StatutChambre == ChambreStatut.Libre))
             {
-                Chambres = chambres;
-                foreach (var chambre in Chambres)
+                ChambresReservations = chambres;
+                foreach (var chambre in ChambresReservations)
                 {
                     chambre.UpdateChambreStatut(ChambreStatut.Occupe);
                 }
@@ -32,20 +32,20 @@
         }
         public Reservation(Chambre chambre, Client client, ReservationStatut statut = ReservationStatut.Prevu ) :this(client, statut)
         {
-            if (chambre.Statut != ChambreStatut.Libre)
+            if (chambre.StatutChambre != ChambreStatut.Libre)
             {
                 throw new Exception("Chambre is not open");
             } else
             {
-                Chambres.Add(chambre);
+                ChambresReservations.Add(chambre);
                 chambre.UpdateChambreStatut(ChambreStatut.Occupe);
             }
         }
 
         public void Cancel()
         {
-            Statut = ReservationStatut.Annule;
-            foreach (var chambre in Chambres)
+            StatutReservation = ReservationStatut.Annule;
+            foreach (var chambre in ChambresReservations)
             {
                 chambre.UpdateChambreStatut(ChambreStatut.Libre);
             }
@@ -53,8 +53,8 @@
 
         public void End()
         {
-            Statut = ReservationStatut.Fini;
-            foreach (var chambre in Chambres)
+            StatutReservation = ReservationStatut.Fini;
+            foreach (var chambre in ChambresReservations)
             {
                 chambre.UpdateChambreStatut(ChambreStatut.EnNottoyage);
             }
@@ -63,7 +63,7 @@
         public decimal GetReservationPrixTotal()
         {
             decimal prixTotal = 0;
-            foreach (var chambre in Chambres)
+            foreach (var chambre in ChambresReservations)
             {
                 prixTotal += chambre.Tarif;
             }
@@ -72,7 +72,7 @@
 
         public override string ToString()
         {
-            return $"Reservation N°{Numero} avec statut {Statut} avec un prix total de {GetReservationPrixTotal()} euros";
+            return $"Reservation N°{NumeroReservation} avec statut {StatutReservation} avec un prix total de {GetReservationPrixTotal()} euros";
         }
     }
     public enum ReservationStatut {

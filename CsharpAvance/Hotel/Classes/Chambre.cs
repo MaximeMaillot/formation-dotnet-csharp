@@ -4,28 +4,28 @@
     {
         private Chambre()
         {
-            Numero = ++NbChambres;
+            NumeroChambre = ++NbChambres;
         }
-        public Chambre(ChambreStatut statut, int nbLit, decimal tarif):this()
+        public Chambre(int nbLit, decimal tarif, ChambreStatut statut = ChambreStatut.Libre) :this()
         {
-            Statut = statut;
             NbLit = nbLit;
             Tarif = tarif;
+            StatutChambre = statut;
         }
         private static int NbChambres { get; set; }
-        public int Numero { get; private set; }
-        public ChambreStatut Statut { get; private set; }
+        public int NumeroChambre { get; private set; }
+        public ChambreStatut StatutChambre { get; private set; }
         public int NbLit { get; private set; }
         public decimal Tarif { get; private set; }
 
         public void UpdateChambreStatut(ChambreStatut statut)
         {
-            Statut = statut;
+            StatutChambre = statut;
         }
 
         public override string ToString()
         {
-            return $"Chambre N°{Numero} qui a {NbLit} lit, à un tarf de {Tarif} euros et est {Statut}";
+            return $"Chambre N°{NumeroChambre} qui a {NbLit} lit, à un tarif de {Tarif} euros et est {StatutChambre}";
         }
     }
 

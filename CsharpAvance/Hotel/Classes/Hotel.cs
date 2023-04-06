@@ -2,14 +2,19 @@
 {
     internal class Hotel
     {
+        public string NomHotel { get; set; }
+        public List<Client> ClientsHotel { get; private set; } = new List<Client>();
+        public List<Reservation> ReservationsHotel { get; private set; } = new List<Reservation>();
+        public List<Chambre> ChambresHotel { get; private set; } = new List<Chambre>();
         public Hotel(string nom)
         {
-            Nom = nom;
+            NomHotel = nom;
+            Random r = new Random();
+            for (int i = 0; i < 30; i++)
+            {
+                AddChambre(new Chambre(r.Next(1,5), r.Next(25,151)));
+            }
         }
-        public string Nom { get; set; }
-        public List<Client> Clients { get; private set; } = new List<Client>();
-        public List<Reservation> Reservations { get; private set; } = new List<Reservation>();
-        public List<Chambre> Chambres { get; private set; } = new List<Chambre>();
 
         /// <summary>
         /// Add a client to the hostel
@@ -17,12 +22,12 @@
         /// <param name="client"></param>
         public void AddClient(Client client)
         {
-            Clients.Add(client);
+            ClientsHotel.Add(client);
         }
 
         public List<Reservation> GetReservationsByClient(Client client)
         {
-            return Reservations.Where(reservation =>  reservation.Client == client).ToList();
+            return ReservationsHotel.Where(reservation =>  reservation.ClientReservation == client).ToList();
         }
 
         /// <summary>
@@ -31,12 +36,12 @@
         /// <param name="reservation"></param>
         public void AddReservation(Reservation reservation)
         {
-            Reservations.Add(reservation);
+            ReservationsHotel.Add(reservation);
         }
 
         public void CancelReservation(int numero)
         {
-            int index = Reservations.FindIndex(r => r.Numero == numero);
+            int index = ReservationsHotel.FindIndex(r => r.NumeroReservation == numero);
             if (index == -1)
             {
                 throw new Exception("Reservation not found");
@@ -44,13 +49,13 @@
             else
             {
                 // Remboursement
-                Reservations[index].Cancel();
+                ReservationsHotel[index].Cancel();
             }
         }
 
         public void EndReservation(int numero)
         {
-            int index = Reservations.FindIndex(r => r.Numero == numero);
+            int index = ReservationsHotel.FindIndex(r => r.NumeroReservation == numero);
             if (index == -1)
             {
                 throw new Exception("Reservation not found");
@@ -58,25 +63,30 @@
             else
             {
                 // Payement
-                Reservations[index].End();
+                ReservationsHotel[index].End();
             }
         }
 
         public void CleanChambre(int numero)
         {
-            Chambre chambre = Chambres.Find(c =>  c.Numero == numero);
-            if (chambre != null)
-            {
-                chambre.UpdateChambreStatut(ChambreStatut.Libre);
-            } else
+            Chambre chambre = ChambresHotel.Find(c =>  c.NumeroChambre == numero);
+            if (chambre == null)
             {
                 throw new Exception("Chambre not found");
+            }
+            else if (chambre.StatutChambre != ChambreStatut.EnNottoyage)
+            {
+                throw new Exception($"Chambre not {ChambreStatut.EnNottoyage}");
+            }
+            else
+            {
+                chambre.UpdateChambreStatut(ChambreStatut.Libre);
             }
         }
 
         public List<Chambre> GetChambresAvailableByNbLit(int nbLit)
         {
-            List<Chambre> chambres = Chambres.FindAll(chambre => (chambre.NbLit >= nbLit && chambre.Statut == ChambreStatut.Libre));
+            List<Chambre> chambres = ChambresHotel.FindAll(chambre => (chambre.NbLit >= nbLit && chambre.StatutChambre == ChambreStatut.Libre));
             chambres.Sort((c1, c2) =>  c1.NbLit - c2.NbLit);
             return chambres;
         }
@@ -87,7 +97,7 @@
         /// <param name="chambre"></param>
         public void AddChambre(Chambre chambre)
         {
-            Chambres.Add(chambre);
+            ChambresHotel.Add(chambre);
         }
 
         /// <summary>
@@ -96,7 +106,7 @@
         /// <returns></returns>
         public bool HasClient()
         {
-            return Clients.Count > 0;
+            return ClientsHotel.Count > 0;
         }
 
         /// <summary>
@@ -105,7 +115,7 @@
         /// <returns></returns>
         public bool HasReservation()
         {
-            return Reservations.Count > 0;
+            return ReservationsHotel.Count > 0;
         }
 
         /// <summary>
@@ -114,17 +124,17 @@
         /// <returns></returns>
         public bool HasChambre()
         {
-            return Chambres.Count > 0;
+            return ChambresHotel.Count > 0;
         }
 
         public bool HasChambreOpen()
         {
-            return Chambres.Any(chambre => chambre.Statut == ChambreStatut.Libre);
+            return ChambresHotel.Any(chambre => chambre.StatutChambre == ChambreStatut.Libre);
         }
 
         public int GetNbChambreOpen() 
         {
-            return Chambres.Count(chambre => chambre.Statut == ChambreStatut.Libre);
+            return ChambresHotel.Count(chambre => chambre.StatutChambre == ChambreStatut.Libre);
         }
 
         /// <summary>
@@ -134,7 +144,7 @@
         /// <returns></returns>
         public bool ClientExistsByNumero(int numero)
         {
-            return Clients.Any(client => client.Numero == numero);
+            return ClientsHotel.Any(client => client.Numero == numero);
         }
 
         /// <summary>
@@ -144,7 +154,7 @@
         /// <returns></returns>
         public bool ChambreExistsByNumero(int numero)
         {
-            return Chambres.Any(chambre => chambre.Numero == numero);
+            return ChambresHotel.Any(chambre => chambre.NumeroChambre == numero);
         }
 
         /// <summary>
@@ -154,7 +164,7 @@
         /// <returns></returns>
         public bool ReservationExistsByNumero(int numero)
         {
-            return Reservations.Any(reservation => reservation.Numero == numero);
+            return ReservationsHotel.Any(reservation => reservation.NumeroReservation == numero);
         }
 
         /// <summary>
@@ -164,7 +174,7 @@
         /// <returns></returns>
         public Chambre GetChambreByNumero(int numero)
         {
-            return Chambres.Find((chambre) => chambre.Numero == numero);
+            return ChambresHotel.Find((chambre) => chambre.NumeroChambre == numero);
         }
 
         /// <summary>
@@ -174,7 +184,7 @@
         /// <returns></returns>
         public Reservation GetReservationByNumero(int numero)
         {
-            return Reservations.Find((reservation) => reservation.Numero == numero);
+            return ReservationsHotel.Find((reservation) => reservation.NumeroReservation == numero);
         }
 
         /// <summary>
@@ -184,7 +194,7 @@
         /// <returns></returns>
         public Client GetClientByNumero(int numero)
         {
-            return Clients.Find((client) => client.Numero == numero);
+            return ClientsHotel.Find((client) => client.Numero == numero);
         }
     }
 }
