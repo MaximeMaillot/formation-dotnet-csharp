@@ -4,18 +4,65 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Hostel.Exceptions;
+
 namespace Hostel.Classes.Helper
 {
     internal static class AskUserHelper
     {
+
+        public static T KeepAskingUntilCorrect<T>(Func<T> action)
+        {
+            T item;
+            do
+            {
+                try
+                {
+                    item = action();
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    ConsoleHelper.WriteInColor(ex.Message, ConsoleColor.Red);
+                }
+            } while (true);
+            return item;
+        }
+
         public static (string nom, string prenom, string tel) AskUserClientsDetails()
         {
-            bool isCorrect;
+            string nom = AskUserFirstName();
+            string prenom = AskUserLastName();
+            string tel = AskUserPhone();
+            return (nom, prenom, tel);
+        }
+
+        public static string AskUserFirstName()
+        {
             Console.Write("Quel est le nom du client ? ");
             string nom = Console.ReadLine();
+            if (nom == null || nom.Length == 0)
+            {
+                throw new UserInputException();
+            }
+            return nom;
+        }
+
+        public static string AskUserLastName()
+        {
             Console.Write("Quel est le prénom du client ? ");
             string prenom = Console.ReadLine();
+            if (nom == null || nom.Length == 0)
+            {
+                throw new UserInputException();
+            }
+            return prenom;
+        }
+
+        public static string AskUserPhone()
+        {
             string tel;
+            bool isCorrect;
             do
             {
                 Console.Write("Quel est le numéro de téléphone du client ? ");
@@ -26,7 +73,7 @@ namespace Hostel.Classes.Helper
                     ConsoleHelper.WriteInColor("Un numéro de téléphone est composé de 10 chiffres", ConsoleColor.Red);
                 }
             } while (!isCorrect);
-            return (nom, prenom, tel);
+            return tel;
         }
 
         public static int AskUserClientNumero(Hotel hotel)
@@ -144,6 +191,12 @@ namespace Hostel.Classes.Helper
         public static (int nblit, decimal tarif) AskUserChambreDetails()
         {
             int nbLit = AskUserNbLit();
+            decimal tarif = AskUserTarif();
+            return (nbLit, tarif);
+        }
+
+        public static decimal AskUserTarif()
+        {
             decimal tarif;
             bool isCorrect;
             do
@@ -156,7 +209,7 @@ namespace Hostel.Classes.Helper
                     isCorrect = false;
                 }
             } while (!isCorrect);
-            return (nbLit, tarif);
+            return tarif;
         }
     }
 }

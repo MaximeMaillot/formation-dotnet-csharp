@@ -29,17 +29,22 @@ namespace Hostel.Classes
                 (3, "Afficher les réservations d'un client", hotelHelper.ShowReservationClient),
                 (4, "Ajouter une réservation", hotelHelper.AddReservation),
                 (5, "Annuler une réservation", hotelHelper.CancelReservation),
-                (6, "Afficher la liste des réservations", hotelHelper.ShowListReservations),
-                (7, "Ajouter une chambre", hotelHelper.AddChambre),
-                (8, "Afficher les chambres", hotelHelper.ShowListChambres),
-                (9, "Finir sa réservation", hotelHelper.EndReservation),
+                (6, "Finir sa réservation", hotelHelper.EndReservation),
+                (7, "Afficher la liste des réservations", hotelHelper.ShowListReservations),
+                (8, "Ajouter une chambre", hotelHelper.AddChambre),
+                (9, "Afficher les chambres", hotelHelper.ShowListChambres),
                 (10, "Nettoyer une chambre", hotelHelper.CleanChambre),
                 (11, "Afficher chambres disponibles par nombre de lits", hotelHelper.ShowChamberListByNbLit),
-                (12, "Mettre en route le robot de piscine", hotelHelper.Exterminate),
+                (999, "Mettre en route le robot de piscine", hotelHelper.Exterminate),
                 (0, "Quitter", null)
             };
-
-            Menu.Classes.Menu.HandleIHM(mainMenu);
+            try
+            {
+                Menu.Classes.Menu.HandleIHM(mainMenu, "--- Menu de l'hôtel ---");
+            } catch (Exception ex)
+            {
+                ConsoleHelper.WriteInColor(ex.Message, ConsoleColor.DarkMagenta);
+            }
         }
     }
 }

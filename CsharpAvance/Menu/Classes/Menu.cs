@@ -45,8 +45,8 @@ namespace Menu.Classes
             menu.ForEach(item => menuSimplified.Add((item.num, item.msg)));
             do
             {
-                Menu.ShowMenu(menuSimplified, menuTitle);
-                int choice = Menu.AskMenuChoice(menuSimplified);
+                ShowMenu(menuSimplified, menuTitle);
+                int choice = AskMenuChoice(menuSimplified);
                 Console.Clear();
                 var menuChoice = menu.FirstOrDefault(m => m.num == choice);
                 if (menuChoice == default((int, string, Action)))
