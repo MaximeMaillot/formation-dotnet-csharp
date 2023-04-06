@@ -3,10 +3,10 @@
     internal class Reservation
     {
         private static int NbReservations { get; set; }
-        public int NumeroReservation { get; set; }
-        public ReservationStatut StatutReservation { get; set; }
-        public List<Chambre> ChambresReservations { get; set; } = new List<Chambre>();
-        public Client ClientReservation { get; set; }
+        public int NumeroReservation { get; private set; }
+        public ReservationStatut StatutReservation { get; private set; }
+        public List<Chambre> ChambresReservations { get; private set; } = new List<Chambre>();
+        public Client ClientReservation { get; private set; }
         private Reservation()
         {
             NumeroReservation = ++NbReservations;

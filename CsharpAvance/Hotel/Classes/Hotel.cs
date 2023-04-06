@@ -9,7 +9,7 @@
         public Hotel(string nom)
         {
             NomHotel = nom;
-            Random r = new Random();
+            Random r = new();
             for (int i = 0; i < 30; i++)
             {
                 AddChambre(new Chambre(r.Next(1,5), r.Next(25,151)));
@@ -69,7 +69,7 @@
 
         public void CleanChambre(int numero)
         {
-            Chambre chambre = ChambresHotel.Find(c =>  c.NumeroChambre == numero);
+            Chambre chambre = ChambresHotel.Find(c => c.NumeroChambre == numero);
             if (chambre == null)
             {
                 throw new Exception("Chambre not found");

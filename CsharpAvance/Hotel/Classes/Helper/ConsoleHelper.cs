@@ -19,5 +19,10 @@ namespace Hostel.Classes.Helper
             Console.WriteLine(msg);
             Console.ResetColor();
         }
+
+        public static string ReadLine()
+        {
+            return (Console.ReadLine() ?? "").Trim();
+        }
     }
 }

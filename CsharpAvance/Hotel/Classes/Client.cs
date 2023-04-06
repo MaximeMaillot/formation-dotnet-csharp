@@ -23,42 +23,34 @@ namespace Hostel.Classes
         private static int NbClients { get; set; }
         public int Numero
         {
-            get => _numero; set
+            get => _numero; private set
             {
                 if (value < 0)
                 {
-                    new UserInputException("Le numéro du client doit être supérieur à 0");
+                    throw new UserInputException("Le numéro du client doit être supérieur à 0");
                 }
                 _numero = value;
             }
         }
         public string Nom
         {
-            get => _nom; set
+            get => _nom; private set
             {
-                if (value == null)
-                {
-                    new UserInputException("Entrez un nom correct");
-                }
-                _nom = value;
+                _nom = value ?? throw new UserInputException("Entrez un nom correct");
             }
         }
 
         public string Prenom
         {
-            get => _prenom; set
+            get => _prenom; private set
             {
-                if (value == null)
-                {
-                    new UserInputException("Entrez un prénom correct");
-                }
-                _prenom = value;
+                _prenom = value ?? throw new UserInputException("Entrez un prénom correct");
             }
         }
 
         public string NumTel
         {
-            get => _numTel; set
+            get => _numTel; private set
             {
                 if (!value.StartsWith("0"))
                 {

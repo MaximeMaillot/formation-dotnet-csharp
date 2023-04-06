@@ -25,11 +25,11 @@ namespace Hostel.Classes.Helper
                 {
                     ConsoleHelper.WriteInColor(ex.Message, ConsoleColor.Red);
                 }
-                catch (FormatException ex)
+                catch (FormatException)
                 {
                     ConsoleHelper.WriteInColor("Entrez une valeur correcte", ConsoleColor.Red);
                 }
-                catch (OverflowException ex)
+                catch (OverflowException)
                 {
                     ConsoleHelper.WriteInColor("Entrez un nombre correct", ConsoleColor.Red);
                 }
@@ -51,11 +51,11 @@ namespace Hostel.Classes.Helper
                 {
                     ConsoleHelper.WriteInColor(ex.Message, ConsoleColor.Red);
                 }
-                catch (FormatException ex)
+                catch (FormatException)
                 {
                     ConsoleHelper.WriteInColor("Entrez une valeur correcte", ConsoleColor.Red);
                 }
-                catch (OverflowException ex)
+                catch (OverflowException)
                 {
                     ConsoleHelper.WriteInColor("Entrez un nombre correct", ConsoleColor.Red);
                 }
@@ -67,7 +67,7 @@ namespace Hostel.Classes.Helper
         public static int AskUser(out int userInput, string question, string error, int min = int.MaxValue, int max = int.MaxValue)
         {
             Console.Write(question);
-            userInput = Convert.ToInt32(Console.ReadLine());
+            userInput = Convert.ToInt32(ConsoleHelper.ReadLine());
             if (userInput >= max || userInput < min)
             {
                 throw new UserInputException(error);
@@ -79,8 +79,8 @@ namespace Hostel.Classes.Helper
         public static string AskUser(out string userInput, string question, string error, int minLength = 1, int maxLength = 200)
         {
             Console.Write(question);
-            userInput = Console.ReadLine();
-            if (userInput == null || userInput.Length < minLength || userInput.Length >= maxLength)
+            userInput = ConsoleHelper.ReadLine();
+            if (userInput.Length < minLength || userInput.Length >= maxLength)
             {
                 throw new UserInputException(error);
             }
@@ -99,8 +99,8 @@ namespace Hostel.Classes.Helper
         public static string AskUserFirstName()
         {
             Console.Write("Quel est le nom du client ? ");
-            string nom = Console.ReadLine();
-            if (nom == null || nom.Length == 0)
+            string nom = ConsoleHelper.ReadLine();
+            if (nom.Length == 0)
             {
                 throw new UserInputException("Le nom a un format incorrect");
             }
@@ -110,8 +110,8 @@ namespace Hostel.Classes.Helper
         public static string AskUserLastName()
         {
             Console.Write("Quel est le prénom du client ? ");
-            string prenom = Console.ReadLine();
-            if (prenom == null || prenom.Length == 0)
+            string prenom = ConsoleHelper.ReadLine();
+            if (prenom.Length == 0)
             {
                 throw new UserInputException("Le prénom a un format incorrect");
             }
@@ -123,7 +123,7 @@ namespace Hostel.Classes.Helper
         public static string AskUserPhone()
         {
             Console.Write("Quel est le numéro de téléphone du client ? ");
-            string tel = Console.ReadLine();
+            string tel = ConsoleHelper.ReadLine();
             if (tel.Length != 10 || !tel.StartsWith("0"))
             {
                 throw new PhoneException("Un numéro de téléphone commence par 0 et est composé de 10 chiffres");
@@ -136,7 +136,7 @@ namespace Hostel.Classes.Helper
         public static int AskUserClientNumero(Hotel hotel)
         {
             Console.Write("Quel est le numéro du client ? ");
-            int numeroClient = Convert.ToInt32(Console.ReadLine());
+            int numeroClient = Convert.ToInt32(ConsoleHelper.ReadLine());
             if (!hotel.ClientExistsByNumero(numeroClient))
             {
                 throw new HotelException("Le client n'exise pas");
@@ -149,7 +149,7 @@ namespace Hostel.Classes.Helper
         public static int AskUserChambreNumero(Hotel hotel)
         {
             Console.Write("Quel est le numéro de la chambre ? ");
-            int numeroChambre = Convert.ToInt32(Console.ReadLine());
+            int numeroChambre = Convert.ToInt32(ConsoleHelper.ReadLine());
             if (!hotel.ChambreExistsByNumero(numeroChambre))
             {
                 throw new HotelException("Cette chambre n'exise pas");
@@ -159,7 +159,7 @@ namespace Hostel.Classes.Helper
 
         public static List<int> AskUserMultipleChambreNumero(Hotel hotel)
         {
-            List<int> chambreNumbers = new List<int>();
+            List<int> chambreNumbers = new();
             do
             {
                 int chambreNumber = LoopUntilCorrect(AskUserChambreNumero, hotel);
@@ -177,7 +177,7 @@ namespace Hostel.Classes.Helper
                     return chambreNumbers;
                 }
                 Console.Write("Ajouter une autre chambre ? (Y/n)");
-                string answer = Console.ReadLine().Trim().ToLower();
+                string answer = ConsoleHelper.ReadLine().ToLower();
                 if (answer == "n")
                 {
                     return chambreNumbers;
@@ -190,7 +190,7 @@ namespace Hostel.Classes.Helper
         public static int AskUserReservationNumero(Hotel hotel)
         {
             Console.Write("Quel est le numéro de la réservation ? ");
-            int numReservation = Convert.ToInt32(Console.ReadLine());
+            int numReservation = Convert.ToInt32(ConsoleHelper.ReadLine());
 
             if (!hotel.ReservationExistsByNumero(numReservation))
             {
@@ -215,7 +215,7 @@ namespace Hostel.Classes.Helper
         public static int AskUserNbLit()
         {
             Console.Write("Combien la chambre possède t-elle de lit ? ");
-            int nbLit = Convert.ToInt32(Console.ReadLine());
+            int nbLit = Convert.ToInt32(ConsoleHelper.ReadLine());
             if (nbLit <= 0)
             {
                 throw new UserInputException("Entrer un nombre de lit correct");
@@ -233,7 +233,7 @@ namespace Hostel.Classes.Helper
         public static decimal AskUserTarif()
         {
             Console.Write("Combien la chambre possède t-elle de lit ? ");
-            decimal tarif = Convert.ToDecimal(Console.ReadLine());
+            decimal tarif = Convert.ToDecimal(ConsoleHelper.ReadLine());
             if (tarif <= 0)
             {
                 throw new UserInputException("Entrer un prix correct");

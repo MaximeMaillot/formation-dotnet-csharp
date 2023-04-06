@@ -9,7 +9,7 @@ namespace Hostel.Classes.Helper
 {
     internal class IHMHelper
     {
-        private Hotel _hotel;
+        private readonly Hotel _hotel;
         public IHMHelper(Hotel hotel)
         {
             _hotel = hotel;
@@ -18,10 +18,10 @@ namespace Hostel.Classes.Helper
         public void AddClient()
         {
             
-            var clientDetails = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserClientsDetails);
+            var (nom, prenom, tel) = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserClientsDetails);
             try
             {
-                _hotel.AddClient(new Client(clientDetails.nom, clientDetails.prenom, clientDetails.tel));
+                _hotel.AddClient(new Client(nom, prenom, tel));
             } catch(PhoneException ex)
             {
                 ConsoleHelper.WriteInColor(ex.Message, ConsoleColor.Red);
@@ -60,7 +60,7 @@ namespace Hostel.Classes.Helper
             }
             int numeroClient = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserClientNumero, _hotel);
             List<int> numeroChambres = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserMultipleChambreNumero, _hotel);
-            List<Chambre> chambres = new List<Chambre>();
+            List<Chambre> chambres = new();
             foreach (int numeroChambre in numeroChambres)
             {
                 chambres.Add(_hotel.GetChambreByNumero(numeroChambre));
@@ -89,7 +89,7 @@ namespace Hostel.Classes.Helper
             }
             int numeroClient = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserClientNumero, _hotel);
             List<int> numeroChambres = AskUserHelper.AskUserMultipleChambreNumero(_hotel);
-            List<Chambre> chambres = new List<Chambre>();
+            List<Chambre> chambres = new();
             foreach (int numeroChambre in numeroChambres)
             {
                 chambres.Add(_hotel.GetChambreByNumero(numeroChambre));
@@ -145,8 +145,8 @@ namespace Hostel.Classes.Helper
         //case 7
         public void AddChambre()
         {
-            var chambreDetails = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserChambreDetails);
-            _hotel.AddChambre(new Chambre(chambreDetails.nblit, chambreDetails.tarif));
+            var (nblit, tarif) = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserChambreDetails);
+            _hotel.AddChambre(new Chambre(nblit, tarif));
         }
         //case 8
         public void ShowListChambres()
@@ -201,11 +201,6 @@ namespace Hostel.Classes.Helper
             {
                 Console.WriteLine("\t" + c);
             }
-        }
-
-        public void Exterminate()
-        {
-            ConsoleHelper.WriteInColor("The end is near", ConsoleColor.DarkRed);
         }
     }
 }

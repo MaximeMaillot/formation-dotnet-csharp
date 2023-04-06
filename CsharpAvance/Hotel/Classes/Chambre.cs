@@ -12,6 +12,7 @@ namespace Hostel.Classes
         {
             NumeroChambre = ++NbChambres;
         }
+        /// <exception cref="UserInputException"></exception>
         public Chambre(int nbLit, decimal tarif, ChambreStatut statut = ChambreStatut.Libre) : this()
         {
             NbLit = nbLit;
@@ -61,6 +62,7 @@ namespace Hostel.Classes
                 {
                     throw new UserInputException("Tarif inférieur à 0");
                 }
+                _tarif = value;
             }
         }
 

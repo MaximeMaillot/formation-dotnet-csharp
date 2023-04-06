@@ -7,10 +7,18 @@ namespace Hostel.Classes
     {
         static void Start()
         {
-            Console.Write("Quel est le nom de l'Hôtel ? (\"test\" pour les données de test) ");
-            Hotel hotel = new Hotel(Console.ReadLine());
+            string nomHotel = AskUserHelper.LoopUntilCorrect(() =>
+            {
+                Console.Write("Quel est le nom de l'Hôtel ? (\"test\" pour les données de test) ");
+                string nom = ConsoleHelper.ReadLine();
+                if (nom.Length == 0) {
+                    throw new Exceptions.UserInputException("Le nom de l'hôtel ne peut pas être vide");
+                }
+                return nom;
+            });
+            Hotel hotel = new(nomHotel);
 
-            if (hotel.NomHotel.Trim().ToLower() == "test")
+            if (hotel.NomHotel.ToLower() == "test")
             {
                 hotel.AddChambre(new Chambre(5, 12));
                 hotel.AddChambre(new Chambre(5, 25));
@@ -21,7 +29,7 @@ namespace Hostel.Classes
                 hotel.AddClient(new Client("testNom2", "testPrenom2", "0002040608"));
             }
 
-            IHMHelper hotelHelper = new IHMHelper(hotel);
+            IHMHelper hotelHelper = new(hotel);
 
             List<(int num, string msg, Action action)> mainMenu = new() {
                 (1, "Ajouter un client", hotelHelper.AddClient),
@@ -35,13 +43,13 @@ namespace Hostel.Classes
                 (9, "Afficher les chambres", hotelHelper.ShowListChambres),
                 (10, "Nettoyer une chambre", hotelHelper.CleanChambre),
                 (11, "Afficher chambres disponibles par nombre de lits", hotelHelper.ShowChamberListByNbLit),
-                (999, "Mettre en route le robot de piscine", hotelHelper.Exterminate),
                 (0, "Quitter", null)
             };
             try
             {
                 Menu.Classes.Menu.HandleIHM(mainMenu, "--- Menu de l'hôtel ---");
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 ConsoleHelper.WriteInColor(ex.Message, ConsoleColor.DarkMagenta);
             }
