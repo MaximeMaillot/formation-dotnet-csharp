@@ -21,7 +21,7 @@ namespace Hostel.Classes
                 hotel.AddClient(new Client("testNom2", "testPrenom2", "0002040608"));
             }
 
-            HotelIHMHelper hotelHelper = new HotelIHMHelper(hotel);
+            IHMHelper hotelHelper = new IHMHelper(hotel);
 
             List<(int num, string msg, Action action)> mainMenu = new() {
                 (1, "Ajouter un client", hotelHelper.AddClient),

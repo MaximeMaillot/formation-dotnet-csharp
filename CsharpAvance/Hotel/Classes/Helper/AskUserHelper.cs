@@ -23,7 +23,7 @@ namespace Hostel.Classes.Helper
                 isCorrect = int.TryParse(tel, out _) && tel.Length == 10;
                 if (!isCorrect)
                 {
-                    HotelConsoleHelper.WriteInColor("Un numéro de téléphone est composé de 10 chiffres", ConsoleColor.Red);
+                    ConsoleHelper.WriteInColor("Un numéro de téléphone est composé de 10 chiffres", ConsoleColor.Red);
                 }
             } while (!isCorrect);
             return (nom, prenom, tel);
@@ -41,7 +41,7 @@ namespace Hostel.Classes.Helper
                 {
                     if (!hotel.ClientExistsByNumero(numero))
                     {
-                        HotelConsoleHelper.WriteInColor("Client n'exise pas", ConsoleColor.Red);
+                        ConsoleHelper.WriteInColor("Client n'exise pas", ConsoleColor.Red);
                         isCorrect = false;
                     }
                 }
@@ -59,7 +59,7 @@ namespace Hostel.Classes.Helper
                 isCorrect = int.TryParse(Console.ReadLine(), out numeroChambre);
                 if (isCorrect && !hotel.ChambreExistsByNumero(numeroChambre))
                 {
-                    HotelConsoleHelper.WriteInColor("Cette chambre n'existe pas", ConsoleColor.Red);
+                    ConsoleHelper.WriteInColor("Cette chambre n'existe pas", ConsoleColor.Red);
                     isCorrect = false;
                 }
             } while (!isCorrect);
@@ -74,7 +74,7 @@ namespace Hostel.Classes.Helper
                 int chambreNumber = AskUserChambreNumero(hotel);
                 if (chambreNumbers.Contains(chambreNumber))
                 {
-                    HotelConsoleHelper.WriteInColor("La chambre est déjà dans la réservation", ConsoleColor.Red);
+                    ConsoleHelper.WriteInColor("La chambre est déjà dans la réservation", ConsoleColor.Red);
                 }
                 else
                 {
@@ -104,7 +104,7 @@ namespace Hostel.Classes.Helper
                 isCorrect = int.TryParse(Console.ReadLine(), out numReservation);
                 if (isCorrect && !hotel.ReservationExistsByNumero(numReservation))
                 {
-                    HotelConsoleHelper.WriteInColor("Cette reservation n'existe pas", ConsoleColor.Red);
+                    ConsoleHelper.WriteInColor("Cette reservation n'existe pas", ConsoleColor.Red);
                     isCorrect = false;
                 }
             } while (!isCorrect);
@@ -134,7 +134,7 @@ namespace Hostel.Classes.Helper
                 isCorrect = int.TryParse(Console.ReadLine(), out nbLit);
                 if (isCorrect && nbLit <= 0)
                 {
-                    HotelConsoleHelper.WriteInColor("La chambre doit avoir un ou plusieurs lits", ConsoleColor.Red);
+                    ConsoleHelper.WriteInColor("La chambre doit avoir un ou plusieurs lits", ConsoleColor.Red);
                     isCorrect = false;
                 }
             } while (!isCorrect);
@@ -152,7 +152,7 @@ namespace Hostel.Classes.Helper
                 isCorrect = decimal.TryParse(Console.ReadLine(), out tarif);
                 if (isCorrect && tarif < 0)
                 {
-                    HotelConsoleHelper.WriteInColor("Le tarif de la chambre doit être supérieur ou égal à 0", ConsoleColor.Red);
+                    ConsoleHelper.WriteInColor("Le tarif de la chambre doit être supérieur ou égal à 0", ConsoleColor.Red);
                     isCorrect = false;
                 }
             } while (!isCorrect);

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Hostel.Classes.Helper
 {
-    internal class HotelIHMHelper
+    internal class IHMHelper
     {
         private Hotel _hotel;
-        public HotelIHMHelper(Hotel hotel)
+        public IHMHelper(Hotel hotel)
         {
             _hotel = hotel;
         }
@@ -24,7 +24,7 @@ namespace Hostel.Classes.Helper
         {
             if (!_hotel.HasClient())
             {
-                HotelConsoleHelper.WriteInColor("Aucun client", ConsoleColor.Red);
+                ConsoleHelper.WriteInColor("Aucun client", ConsoleColor.Red);
                 return;
             }
             Console.WriteLine("Liste de clients : ");
@@ -38,12 +38,12 @@ namespace Hostel.Classes.Helper
         {
             if (!_hotel.HasClient())
             {
-                HotelConsoleHelper.WriteInColor("Aucun client", ConsoleColor.Red);
+                ConsoleHelper.WriteInColor("Aucun client", ConsoleColor.Red);
                 return;
             }
             if (!_hotel.HasChambre())
             {
-                HotelConsoleHelper.WriteInColor("Aucune chambre", ConsoleColor.Red);
+                ConsoleHelper.WriteInColor("Aucune chambre", ConsoleColor.Red);
                 return;
             }
             int numeroClient = AskUserHelper.AskUserClientNumero(_hotel);
@@ -59,7 +59,7 @@ namespace Hostel.Classes.Helper
             }
             catch (Exception)
             {
-                HotelConsoleHelper.WriteInColor("Chambre non disponible", ConsoleColor.Red);
+                ConsoleHelper.WriteInColor("Chambre non disponible", ConsoleColor.Red);
             }
         }
         // case 4
@@ -67,12 +67,12 @@ namespace Hostel.Classes.Helper
         {
             if (!_hotel.HasClient())
             {
-                HotelConsoleHelper.WriteInColor("Aucun client", ConsoleColor.Red);
+                ConsoleHelper.WriteInColor("Aucun client", ConsoleColor.Red);
                 return;
             }
             if (!_hotel.HasChambre())
             {
-                HotelConsoleHelper.WriteInColor("Aucune chambre", ConsoleColor.Red);
+                ConsoleHelper.WriteInColor("Aucune chambre", ConsoleColor.Red);
                 return;
             }
             int numeroClient = AskUserHelper.AskUserClientNumero(_hotel);
@@ -88,7 +88,7 @@ namespace Hostel.Classes.Helper
             }
             catch (Exception)
             {
-                HotelConsoleHelper.WriteInColor("Chambre non disponible", ConsoleColor.Red);
+                ConsoleHelper.WriteInColor("Chambre non disponible", ConsoleColor.Red);
             }
         }
         //case 5
@@ -96,17 +96,17 @@ namespace Hostel.Classes.Helper
         {
             if (!_hotel.HasClient())
             {
-                HotelConsoleHelper.WriteInColor("Aucun client", ConsoleColor.Red);
+                ConsoleHelper.WriteInColor("Aucun client", ConsoleColor.Red);
                 return;
             }
             if (!_hotel.HasChambre())
             {
-                HotelConsoleHelper.WriteInColor("Aucune chambre", ConsoleColor.Red);
+                ConsoleHelper.WriteInColor("Aucune chambre", ConsoleColor.Red);
                 return;
             }
             if (!_hotel.HasReservation())
             {
-                HotelConsoleHelper.WriteInColor("Aucune réservation", ConsoleColor.Red);
+                ConsoleHelper.WriteInColor("Aucune réservation", ConsoleColor.Red);
                 return;
             }
             int numReservation = AskUserHelper.AskUserReservationNumero(_hotel);
@@ -117,7 +117,7 @@ namespace Hostel.Classes.Helper
         {
             if (!_hotel.HasReservation())
             {
-                HotelConsoleHelper.WriteInColor("Aucune réservation", ConsoleColor.Red);
+                ConsoleHelper.WriteInColor("Aucune réservation", ConsoleColor.Red);
                 return;
             }
             Console.WriteLine("Liste des réservations : ");
@@ -141,7 +141,7 @@ namespace Hostel.Classes.Helper
         {
             if (!_hotel.HasChambre())
             {
-                HotelConsoleHelper.WriteInColor("Aucune chambre", ConsoleColor.Red);
+                ConsoleHelper.WriteInColor("Aucune chambre", ConsoleColor.Red);
                 return;
             }
             Console.WriteLine("Liste des chambres : ");
@@ -155,7 +155,7 @@ namespace Hostel.Classes.Helper
         {
             if (!_hotel.HasReservation())
             {
-                HotelConsoleHelper.WriteInColor("Aucune réservation", ConsoleColor.Red);
+                ConsoleHelper.WriteInColor("Aucune réservation", ConsoleColor.Red);
                 return;
             }
             int numReservationEnd = AskUserHelper.AskUserReservationNumero(_hotel);
@@ -166,7 +166,7 @@ namespace Hostel.Classes.Helper
         {
             if (!_hotel.HasChambre())
             {
-                HotelConsoleHelper.WriteInColor("Aucune réservation", ConsoleColor.Red);
+                ConsoleHelper.WriteInColor("Aucune réservation", ConsoleColor.Red);
                 return;
             }
             int numChambreClean = AskUserHelper.AskUserChambreNumero(_hotel);
@@ -176,7 +176,7 @@ namespace Hostel.Classes.Helper
             }
             catch (Exception ex)
             {
-                HotelConsoleHelper.WriteInColor(ex.Message, ConsoleColor.Red);
+                ConsoleHelper.WriteInColor(ex.Message, ConsoleColor.Red);
             }
         }
         //case 11
@@ -193,7 +193,7 @@ namespace Hostel.Classes.Helper
 
         public void Exterminate()
         {
-            Console.WriteLine("La fin est proche");
+            ConsoleHelper.WriteInColor("The end is near", ConsoleColor.DarkRed);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hostel.Classes.Helper
 {
-    internal static class HotelConsoleHelper
+    internal static class ConsoleHelper
     {
         /// <summary>
         /// Write a message in the console with a certain color
