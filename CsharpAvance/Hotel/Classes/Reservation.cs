@@ -60,9 +60,19 @@
             }
         }
 
+        public decimal GetReservationPrixTotal()
+        {
+            decimal prixTotal = 0;
+            foreach (var chambre in Chambres)
+            {
+                prixTotal += chambre.Tarif;
+            }
+            return prixTotal;
+        }
+
         public override string ToString()
         {
-            return $"Reservation N°{Numero} avec statut {Statut}";
+            return $"Reservation N°{Numero} avec statut {Statut} avec un prix total de {GetReservationPrixTotal()} euros";
         }
     }
     public enum ReservationStatut {

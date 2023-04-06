@@ -20,10 +20,13 @@ namespace Hostel.Classes
 
             if (hotel.Nom.Trim().ToLower() == "test")
             {
-                hotel.AddChambre(new Chambre(ChambreStatut.Libre, 2, 12));
+                hotel.AddChambre(new Chambre(ChambreStatut.Libre, 5, 12));
                 hotel.AddChambre(new Chambre(ChambreStatut.Libre, 5, 25));
-                hotel.AddChambre(new Chambre(ChambreStatut.Libre, 7, 50));
-                hotel.AddClient(new Client("test", "test", "0321032103"));
+                hotel.AddChambre(new Chambre(ChambreStatut.Libre, 1, 50));
+                hotel.AddChambre(new Chambre(ChambreStatut.Libre, 2, 42));
+                hotel.AddChambre(new Chambre(ChambreStatut.Libre, 9, 37));
+                hotel.AddClient(new Client("testNom", "testPrenom", "0123456789"));
+                hotel.AddClient(new Client("testNom2", "testPrenom2", "0002040608"));
             }
 
             List<(int num, string msg)> mainMenu = new() {
@@ -35,6 +38,9 @@ namespace Hostel.Classes
                 (6, "Afficher la liste des réservations"),
                 (7, "Ajouter une chambre"),
                 (8, "Afficher les chambres"),
+                (9, "Finir sa réservation"),
+                (10, "Nettoyer une chambre"),
+                (11, "Afficher chambres disponibles par nombre de lits"),
                 (0, "Quitter")
             };
             do
@@ -152,7 +158,23 @@ namespace Hostel.Classes
                             Console.WriteLine("\t" + c);
                         }
                         break;
-
+                    case 9:
+                        int numReservationEnd = AskUserReservationNumero(hotel);
+                        hotel.EndReservation(numReservationEnd);
+                        break;
+                    case 10:
+                        int numChambreClean = AskUserChambreNumero(hotel);
+                        hotel.CleanChambre(numChambreClean);
+                        break;
+                    case 11:
+                        int nbLit = AskUserNbLit();
+                        List<Chambre> chambresByLit = hotel.GetChambresAvailableByNbLit(nbLit);
+                        Console.WriteLine($"Liste des chambres disponible avec au moins {nbLit} lits");
+                        foreach (Chambre c in  chambresByLit)
+                        {
+                            Console.WriteLine("\t" + c);
+                        }
+                        break;
                     case 0:
                         return;
                     default:
@@ -278,17 +300,10 @@ namespace Hostel.Classes
             return statut;
         }
 
-        private static (ChambreStatut statut, int nblit, decimal tarif) AskUserChambreDetails()
+        private static int AskUserNbLit()
         {
-            List<(int num, string msg)> chambreStatutMenu = new() {
-                ((int)ChambreStatut.Libre, "Libre"),
-                ((int)ChambreStatut.Occupe, "Occupé"),
-                ((int)ChambreStatut.EnNottoyage, "En nettoyage")
-            };
-            bool isCorrect;
-            Menu.Classes.Menu.ShowMenu(chambreStatutMenu, "Quel est le statut de la chambre ? ");
-            ChambreStatut statut = (ChambreStatut)Menu.Classes.Menu.AskMenuChoice(chambreStatutMenu);
             int nbLit;
+            bool isCorrect;
             do
             {
                 Console.Write("Nombre de lit dans la chambre ? ");
@@ -299,6 +314,20 @@ namespace Hostel.Classes
                     isCorrect = false;
                 }
             } while (!isCorrect);
+            return nbLit;
+        }
+
+        private static (ChambreStatut statut, int nblit, decimal tarif) AskUserChambreDetails()
+        {
+            List<(int num, string msg)> chambreStatutMenu = new() {
+                ((int)ChambreStatut.Libre, "Libre"),
+                ((int)ChambreStatut.Occupe, "Occupé"),
+                ((int)ChambreStatut.EnNottoyage, "En nettoyage")
+            };
+            bool isCorrect;
+            Menu.Classes.Menu.ShowMenu(chambreStatutMenu, "Quel est le statut de la chambre ? ");
+            ChambreStatut statut = (ChambreStatut)Menu.Classes.Menu.AskMenuChoice(chambreStatutMenu);
+            int nbLit = AskUserNbLit();
             decimal tarif;
             do
             {

@@ -34,27 +34,6 @@
             Reservations.Add(reservation);
         }
 
-        /// <summary>
-        /// Remove a reservation
-        /// </summary>
-        /// <param name="reservation"></param>
-        public void RemoveReservation(Reservation reservation)
-        {
-            Reservations.Remove(reservation);
-        }
-
-        public void CancelReservation(Reservation reservation)
-        {
-            int index = Reservations.FindIndex(r => r.Numero == reservation.Numero);
-            if (index == -1)
-            {
-                throw new Exception("Reservation not found");
-            } else
-            {
-                Reservations[index].Cancel();
-            }
-        }
-
         public void CancelReservation(int numero)
         {
             int index = Reservations.FindIndex(r => r.Numero == numero);
@@ -64,8 +43,42 @@
             }
             else
             {
+                // Remboursement
                 Reservations[index].Cancel();
             }
+        }
+
+        public void EndReservation(int numero)
+        {
+            int index = Reservations.FindIndex(r => r.Numero == numero);
+            if (index == -1)
+            {
+                throw new Exception("Reservation not found");
+            }
+            else
+            {
+                // Payement
+                Reservations[index].End();
+            }
+        }
+
+        public void CleanChambre(int numero)
+        {
+            Chambre chambre = Chambres.Find(c =>  c.Numero == numero);
+            if (chambre != null)
+            {
+                chambre.UpdateChambreStatut(ChambreStatut.Libre);
+            } else
+            {
+                throw new Exception("Chambre not found");
+            }
+        }
+
+        public List<Chambre> GetChambresAvailableByNbLit(int nbLit)
+        {
+            List<Chambre> chambres = Chambres.FindAll(chambre => (chambre.NbLit >= nbLit && chambre.Statut == ChambreStatut.Libre));
+            chambres.Sort((c1, c2) =>  c1.NbLit - c2.NbLit);
+            return chambres;
         }
 
         /// <summary>
