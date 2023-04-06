@@ -12,6 +12,8 @@ namespace Hostel.Classes
         {
             Numero = ++NbClients;
         }
+        /// <exception cref="UserInputException">This exception is thrown if the input of the user is incorrect</exception>
+        /// <exception cref="PhoneException">This exception is thrown if the phone number is incorrect</exception>
         public Client(string nom, string prenom, string numTel) : this()
         {
             Nom = nom;

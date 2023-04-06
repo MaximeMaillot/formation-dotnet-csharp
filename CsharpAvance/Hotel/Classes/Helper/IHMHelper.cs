@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hostel.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,8 +17,19 @@ namespace Hostel.Classes.Helper
         // case 1
         public void AddClient()
         {
-            var clientDetails = AskUserHelper.AskUserClientsDetails();
-            _hotel.AddClient(new Client(clientDetails.nom, clientDetails.prenom, clientDetails.tel));
+            
+            var clientDetails = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserClientsDetails);
+            try
+            {
+                _hotel.AddClient(new Client(clientDetails.nom, clientDetails.prenom, clientDetails.tel));
+            } catch(PhoneException ex)
+            {
+                ConsoleHelper.WriteInColor(ex.Message, ConsoleColor.Red);
+            }
+            catch (UserInputException ex)
+            {
+                ConsoleHelper.WriteInColor(ex.Message, ConsoleColor.Red);
+            }
         }
         // case 2
         public void ShowListClient()
@@ -46,8 +58,8 @@ namespace Hostel.Classes.Helper
                 ConsoleHelper.WriteInColor("Aucune chambre", ConsoleColor.Red);
                 return;
             }
-            int numeroClient = AskUserHelper.AskUserClientNumero(_hotel);
-            List<int> numeroChambres = AskUserHelper.AskUserMultipleChambreNumero(_hotel);
+            int numeroClient = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserClientNumero, _hotel);
+            List<int> numeroChambres = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserMultipleChambreNumero, _hotel);
             List<Chambre> chambres = new List<Chambre>();
             foreach (int numeroChambre in numeroChambres)
             {
@@ -75,7 +87,7 @@ namespace Hostel.Classes.Helper
                 ConsoleHelper.WriteInColor("Aucune chambre", ConsoleColor.Red);
                 return;
             }
-            int numeroClient = AskUserHelper.AskUserClientNumero(_hotel);
+            int numeroClient = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserClientNumero, _hotel);
             List<int> numeroChambres = AskUserHelper.AskUserMultipleChambreNumero(_hotel);
             List<Chambre> chambres = new List<Chambre>();
             foreach (int numeroChambre in numeroChambres)
@@ -109,7 +121,7 @@ namespace Hostel.Classes.Helper
                 ConsoleHelper.WriteInColor("Aucune réservation", ConsoleColor.Red);
                 return;
             }
-            int numReservation = AskUserHelper.AskUserReservationNumero(_hotel);
+            int numReservation = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserReservationNumero, _hotel);
             _hotel.CancelReservation(numReservation);
         }
         //case 6
@@ -133,7 +145,7 @@ namespace Hostel.Classes.Helper
         //case 7
         public void AddChambre()
         {
-            var chambreDetails = AskUserHelper.AskUserChambreDetails();
+            var chambreDetails = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserChambreDetails);
             _hotel.AddChambre(new Chambre(chambreDetails.nblit, chambreDetails.tarif));
         }
         //case 8
@@ -158,7 +170,7 @@ namespace Hostel.Classes.Helper
                 ConsoleHelper.WriteInColor("Aucune réservation", ConsoleColor.Red);
                 return;
             }
-            int numReservationEnd = AskUserHelper.AskUserReservationNumero(_hotel);
+            int numReservationEnd = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserReservationNumero, _hotel);
             _hotel.EndReservation(numReservationEnd);
         }
         //case 10
@@ -169,7 +181,7 @@ namespace Hostel.Classes.Helper
                 ConsoleHelper.WriteInColor("Aucune réservation", ConsoleColor.Red);
                 return;
             }
-            int numChambreClean = AskUserHelper.AskUserChambreNumero(_hotel);
+            int numChambreClean = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserChambreNumero, _hotel);
             try
             {
                 _hotel.CleanChambre(numChambreClean);
@@ -182,7 +194,7 @@ namespace Hostel.Classes.Helper
         //case 11
         public void ShowChamberListByNbLit()
         {
-            int nbLit = AskUserHelper.AskUserNbLit();
+            int nbLit = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserNbLit);
             List<Chambre> chambresByLit = _hotel.GetChambresAvailableByNbLit(nbLit);
             Console.WriteLine($"Liste des chambres disponible avec au moins {nbLit} lits");
             foreach (Chambre c in chambresByLit)

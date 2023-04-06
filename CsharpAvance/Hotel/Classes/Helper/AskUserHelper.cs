@@ -11,7 +11,7 @@ namespace Hostel.Classes.Helper
     internal static class AskUserHelper
     {
 
-        public static T KeepAskingUntilCorrect<T>(Func<T> action)
+        public static T LoopUntilCorrect<T>(Func<T> action)
         {
             T item;
             do
@@ -21,95 +21,139 @@ namespace Hostel.Classes.Helper
                     item = action();
                     break;
                 }
-                catch (Exception ex)
+                catch (UserInputException ex)
                 {
                     ConsoleHelper.WriteInColor(ex.Message, ConsoleColor.Red);
+                }
+                catch (FormatException ex)
+                {
+                    ConsoleHelper.WriteInColor("Entrez une valeur correcte", ConsoleColor.Red);
+                }
+                catch (OverflowException ex)
+                {
+                    ConsoleHelper.WriteInColor("Entrez un nombre correct", ConsoleColor.Red);
                 }
             } while (true);
             return item;
         }
 
+        public static T LoopUntilCorrect<T>(Func<Hotel, T> action, Hotel hotel)
+        {
+            T item;
+            do
+            {
+                try
+                {
+                    item = action(hotel);
+                    break;
+                }
+                catch (UserInputException ex)
+                {
+                    ConsoleHelper.WriteInColor(ex.Message, ConsoleColor.Red);
+                }
+                catch (FormatException ex)
+                {
+                    ConsoleHelper.WriteInColor("Entrez une valeur correcte", ConsoleColor.Red);
+                }
+                catch (OverflowException ex)
+                {
+                    ConsoleHelper.WriteInColor("Entrez un nombre correct", ConsoleColor.Red);
+                }
+            } while (true);
+            return item;
+        }
+
+        /// <exception cref="UserInputException">This exception is thrown if the input of the user is incorrect</exception>
+        public static int AskUser(out int userInput, string question, string error, int min = int.MaxValue, int max = int.MaxValue)
+        {
+            Console.Write(question);
+            userInput = Convert.ToInt32(Console.ReadLine());
+            if (userInput >= max || userInput < min)
+            {
+                throw new UserInputException(error);
+            }
+            return userInput;
+        }
+
+        /// <exception cref="UserInputException">This exception is thrown if the input of the user is incorrect</exception>
+        public static string AskUser(out string userInput, string question, string error, int minLength = 1, int maxLength = 200)
+        {
+            Console.Write(question);
+            userInput = Console.ReadLine();
+            if (userInput == null || userInput.Length < minLength || userInput.Length >= maxLength)
+            {
+                throw new UserInputException(error);
+            }
+            return userInput;
+        }
+
         public static (string nom, string prenom, string tel) AskUserClientsDetails()
         {
-            string nom = AskUserFirstName();
-            string prenom = AskUserLastName();
-            string tel = AskUserPhone();
+            string nom = LoopUntilCorrect(AskUserFirstName);
+            string prenom = LoopUntilCorrect(AskUserLastName);
+            string tel = LoopUntilCorrect(AskUserPhone);
             return (nom, prenom, tel);
         }
 
+        /// <exception cref="UserInputException">This exception is thrown if the input of the user is incorrect</exception>
         public static string AskUserFirstName()
         {
             Console.Write("Quel est le nom du client ? ");
             string nom = Console.ReadLine();
             if (nom == null || nom.Length == 0)
             {
-                throw new UserInputException();
+                throw new UserInputException("Le nom a un format incorrect");
             }
             return nom;
         }
-
+        /// <exception cref="UserInputException">This exception is thrown if the input of the user is incorrect</exception>
         public static string AskUserLastName()
         {
             Console.Write("Quel est le prénom du client ? ");
             string prenom = Console.ReadLine();
-            if (nom == null || nom.Length == 0)
+            if (prenom == null || prenom.Length == 0)
             {
-                throw new UserInputException();
+                throw new UserInputException("Le prénom a un format incorrect");
             }
             return prenom;
         }
-
+        /// <exception cref="PhoneException"/>
+        /// <exception cref="FormatException"/>
+        /// <exception cref="OverflowException"/>
         public static string AskUserPhone()
         {
-            string tel;
-            bool isCorrect;
-            do
+            Console.Write("Quel est le numéro de téléphone du client ? ");
+            string tel = Console.ReadLine();
+            if (tel.Length != 10 || !tel.StartsWith("0"))
             {
-                Console.Write("Quel est le numéro de téléphone du client ? ");
-                tel = Console.ReadLine();
-                isCorrect = int.TryParse(tel, out _) && tel.Length == 10;
-                if (!isCorrect)
-                {
-                    ConsoleHelper.WriteInColor("Un numéro de téléphone est composé de 10 chiffres", ConsoleColor.Red);
-                }
-            } while (!isCorrect);
+                throw new PhoneException("Un numéro de téléphone commence par 0 et est composé de 10 chiffres");
+            }
             return tel;
         }
-
+        /// <exception cref="HotelException"/>
+        /// <exception cref="FormatException"/>
+        /// <exception cref="OverflowException"/>
         public static int AskUserClientNumero(Hotel hotel)
         {
-            int numero;
-            bool isCorrect;
-            do
+            Console.Write("Quel est le numéro du client ? ");
+            int numeroClient = Convert.ToInt32(Console.ReadLine());
+            if (!hotel.ClientExistsByNumero(numeroClient))
             {
-                Console.Write("Quel est le numéro du client ? ");
-                isCorrect = int.TryParse(Console.ReadLine(), out numero);
-                if (isCorrect)
-                {
-                    if (!hotel.ClientExistsByNumero(numero))
-                    {
-                        ConsoleHelper.WriteInColor("Client n'exise pas", ConsoleColor.Red);
-                        isCorrect = false;
-                    }
-                }
-            } while (!isCorrect);
-            return numero;
+                throw new HotelException("Le client n'exise pas");
+            }
+            return numeroClient;
         }
-
+        /// <exception cref="HotelException"/>
+        /// <exception cref="FormatException"/>
+        /// <exception cref="OverflowException"/>
         public static int AskUserChambreNumero(Hotel hotel)
         {
-            int numeroChambre;
-            bool isCorrect;
-            do
+            Console.Write("Quel est le numéro de la chambre ? ");
+            int numeroChambre = Convert.ToInt32(Console.ReadLine());
+            if (!hotel.ChambreExistsByNumero(numeroChambre))
             {
-                Console.Write("Quel est le numéro de la chambre ? ");
-                isCorrect = int.TryParse(Console.ReadLine(), out numeroChambre);
-                if (isCorrect && !hotel.ChambreExistsByNumero(numeroChambre))
-                {
-                    ConsoleHelper.WriteInColor("Cette chambre n'existe pas", ConsoleColor.Red);
-                    isCorrect = false;
-                }
-            } while (!isCorrect);
+                throw new HotelException("Cette chambre n'exise pas");
+            }
             return numeroChambre;
         }
 
@@ -118,7 +162,7 @@ namespace Hostel.Classes.Helper
             List<int> chambreNumbers = new List<int>();
             do
             {
-                int chambreNumber = AskUserChambreNumero(hotel);
+                int chambreNumber = LoopUntilCorrect(AskUserChambreNumero, hotel);
                 if (chambreNumbers.Contains(chambreNumber))
                 {
                     ConsoleHelper.WriteInColor("La chambre est déjà dans la réservation", ConsoleColor.Red);
@@ -140,21 +184,18 @@ namespace Hostel.Classes.Helper
                 }
             } while (true);
         }
-
+        /// <exception cref="HotelException"/>
+        /// <exception cref="FormatException"/>
+        /// <exception cref="OverflowException"/>
         public static int AskUserReservationNumero(Hotel hotel)
         {
-            bool isCorrect;
-            int numReservation;
-            do
+            Console.Write("Quel est le numéro de la réservation ? ");
+            int numReservation = Convert.ToInt32(Console.ReadLine());
+
+            if (!hotel.ReservationExistsByNumero(numReservation))
             {
-                Console.Write("Quel est le numéro de la réservation ? ");
-                isCorrect = int.TryParse(Console.ReadLine(), out numReservation);
-                if (isCorrect && !hotel.ReservationExistsByNumero(numReservation))
-                {
-                    ConsoleHelper.WriteInColor("Cette reservation n'existe pas", ConsoleColor.Red);
-                    isCorrect = false;
-                }
-            } while (!isCorrect);
+                throw new HotelException("Cette reservation n'existe pas");
+            }
             return numReservation;
         }
 
@@ -170,45 +211,33 @@ namespace Hostel.Classes.Helper
             ReservationStatut statut = (ReservationStatut)Menu.Classes.Menu.AskMenuChoice(reservationStatutMenu);
             return statut;
         }
-
+        /// <exception cref="UserInputException">This exception is thrown if the input of the user is incorrect</exception>
         public static int AskUserNbLit()
         {
-            int nbLit;
-            bool isCorrect;
-            do
+            Console.Write("Combien la chambre possède t-elle de lit ? ");
+            int nbLit = Convert.ToInt32(Console.ReadLine());
+            if (nbLit <= 0)
             {
-                Console.Write("Nombre de lit dans la chambre ? ");
-                isCorrect = int.TryParse(Console.ReadLine(), out nbLit);
-                if (isCorrect && nbLit <= 0)
-                {
-                    ConsoleHelper.WriteInColor("La chambre doit avoir un ou plusieurs lits", ConsoleColor.Red);
-                    isCorrect = false;
-                }
-            } while (!isCorrect);
+                throw new UserInputException("Entrer un nombre de lit correct");
+            }
             return nbLit;
         }
-
+        /// <exception cref="UserInputException">This exception is thrown if the input of the user is incorrect</exception>
         public static (int nblit, decimal tarif) AskUserChambreDetails()
         {
             int nbLit = AskUserNbLit();
             decimal tarif = AskUserTarif();
             return (nbLit, tarif);
         }
-
+        /// <exception cref="UserInputException">This exception is thrown if the input of the user is incorrect</exception>
         public static decimal AskUserTarif()
         {
-            decimal tarif;
-            bool isCorrect;
-            do
+            Console.Write("Combien la chambre possède t-elle de lit ? ");
+            decimal tarif = Convert.ToDecimal(Console.ReadLine());
+            if (tarif <= 0)
             {
-                Console.Write("Tarif de la chambre ? ");
-                isCorrect = decimal.TryParse(Console.ReadLine(), out tarif);
-                if (isCorrect && tarif < 0)
-                {
-                    ConsoleHelper.WriteInColor("Le tarif de la chambre doit être supérieur ou égal à 0", ConsoleColor.Red);
-                    isCorrect = false;
-                }
-            } while (!isCorrect);
+                throw new UserInputException("Entrer un prix correct");
+            }
             return tarif;
         }
     }
