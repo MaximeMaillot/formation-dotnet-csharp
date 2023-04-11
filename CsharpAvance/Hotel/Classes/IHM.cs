@@ -7,15 +7,8 @@ namespace Hostel.Classes
     {
         static void Start()
         {
-            string nomHotel = AskUserHelper.LoopUntilCorrect(() =>
-            {
-                Console.Write("Quel est le nom de l'Hôtel ? (\"test\" pour les données de test) ");
-                string nom = ConsoleHelper.ReadLine();
-                if (nom.Length == 0) {
-                    throw new Exceptions.UserInputException("Le nom de l'hôtel ne peut pas être vide");
-                }
-                return nom;
-            });
+            Console.Write("Quel est le nom de l'Hôtel ? (\"test\" pour les données de test) ");
+            string nomHotel = ConsoleHelper.ReadLine();
             Hotel hotel = new(nomHotel);
 
             if (hotel.NomHotel.ToLower() == "test")

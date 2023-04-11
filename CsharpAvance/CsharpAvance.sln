@@ -23,7 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Menu", "Menu\Menu.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Figures", "Figures\Figures.csproj", "{32DF2134-A1CE-4BF3-83DD-36B78CAA58C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoException", "DemoException\DemoException.csproj", "{77F854C5-F937-4206-8491-0048C4100656}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoException", "DemoException\DemoException.csproj", "{77F854C5-F937-4206-8491-0048C4100656}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoAdo", "DemoAdo\DemoAdo.csproj", "{B9057141-E1BC-471F-9E7B-7B538CB8F7C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helper", "Helper\Helper.csproj", "{CA47C6EB-635D-45D3-95FB-E598584B6270}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +79,14 @@ Global
 		{77F854C5-F937-4206-8491-0048C4100656}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77F854C5-F937-4206-8491-0048C4100656}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77F854C5-F937-4206-8491-0048C4100656}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9057141-E1BC-471F-9E7B-7B538CB8F7C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9057141-E1BC-471F-9E7B-7B538CB8F7C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9057141-E1BC-471F-9E7B-7B538CB8F7C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9057141-E1BC-471F-9E7B-7B538CB8F7C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA47C6EB-635D-45D3-95FB-E598584B6270}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA47C6EB-635D-45D3-95FB-E598584B6270}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA47C6EB-635D-45D3-95FB-E598584B6270}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA47C6EB-635D-45D3-95FB-E598584B6270}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

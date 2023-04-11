@@ -18,7 +18,7 @@ namespace Hostel.Classes.Helper
         public void AddClient()
         {
             
-            var (nom, prenom, tel) = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserClientsDetails);
+            var (nom, prenom, tel) = AskUserHelper.AskUserClientsDetails();
             try
             {
                 _hotel.AddClient(new Client(nom, prenom, tel));
@@ -58,8 +58,8 @@ namespace Hostel.Classes.Helper
                 ConsoleHelper.WriteInColor("Aucune chambre", ConsoleColor.Red);
                 return;
             }
-            int numeroClient = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserClientNumero, _hotel);
-            List<int> numeroChambres = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserMultipleChambreNumero, _hotel);
+            int numeroClient = AskUserHelper.AskUserClientNumero(_hotel);
+            List<int> numeroChambres = AskUserHelper.AskUserMultipleChambreNumero(_hotel);
             List<Chambre> chambres = new();
             foreach (int numeroChambre in numeroChambres)
             {
@@ -87,7 +87,7 @@ namespace Hostel.Classes.Helper
                 ConsoleHelper.WriteInColor("Aucune chambre", ConsoleColor.Red);
                 return;
             }
-            int numeroClient = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserClientNumero, _hotel);
+            int numeroClient = AskUserHelper.AskUserClientNumero(_hotel);
             List<int> numeroChambres = AskUserHelper.AskUserMultipleChambreNumero(_hotel);
             List<Chambre> chambres = new();
             foreach (int numeroChambre in numeroChambres)
@@ -121,7 +121,7 @@ namespace Hostel.Classes.Helper
                 ConsoleHelper.WriteInColor("Aucune réservation", ConsoleColor.Red);
                 return;
             }
-            int numReservation = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserReservationNumero, _hotel);
+            int numReservation = AskUserHelper.AskUserReservationNumero(_hotel);
             _hotel.CancelReservation(numReservation);
         }
         //case 6
@@ -145,7 +145,7 @@ namespace Hostel.Classes.Helper
         //case 7
         public void AddChambre()
         {
-            var (nblit, tarif) = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserChambreDetails);
+            var (nblit, tarif) = AskUserHelper.AskUserChambreDetails();
             _hotel.AddChambre(new Chambre(nblit, tarif));
         }
         //case 8
@@ -170,7 +170,7 @@ namespace Hostel.Classes.Helper
                 ConsoleHelper.WriteInColor("Aucune réservation", ConsoleColor.Red);
                 return;
             }
-            int numReservationEnd = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserReservationNumero, _hotel);
+            int numReservationEnd = AskUserHelper.AskUserReservationNumero(_hotel);
             _hotel.EndReservation(numReservationEnd);
         }
         //case 10
@@ -181,7 +181,7 @@ namespace Hostel.Classes.Helper
                 ConsoleHelper.WriteInColor("Aucune réservation", ConsoleColor.Red);
                 return;
             }
-            int numChambreClean = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserChambreNumero, _hotel);
+            int numChambreClean = AskUserHelper.AskUserChambreNumero(_hotel);
             try
             {
                 _hotel.CleanChambre(numChambreClean);
@@ -194,7 +194,7 @@ namespace Hostel.Classes.Helper
         //case 11
         public void ShowChamberListByNbLit()
         {
-            int nbLit = AskUserHelper.LoopUntilCorrect(AskUserHelper.AskUserNbLit);
+            int nbLit = AskUserHelper.AskUserNbLit();
             List<Chambre> chambresByLit = _hotel.GetChambresAvailableByNbLit(nbLit);
             Console.WriteLine($"Liste des chambres disponible avec au moins {nbLit} lits");
             foreach (Chambre c in chambresByLit)
