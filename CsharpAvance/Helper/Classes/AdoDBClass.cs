@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
+using Microsoft.Data.SqlClient;
 
 namespace Helper.Classes
 {
     public class AdoDBClass
     {
+        public static SqlConnection connection;
+        public static SqlCommand command;
+        public static SqlDataReader reader; 
         public virtual object this[string name]
         {
             get

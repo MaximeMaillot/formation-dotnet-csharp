@@ -12,7 +12,6 @@ namespace AdoBank.Classes.Ado.Filters
     {
         public int? account_id { get; set; }
         public decimal? solde { get; set; }
-        public Client? client { get; set; }
-        public List<Operation> Operations { get; set; } = new List<Operation>();
+        public int? client_id { get; set; }
     }
 }
