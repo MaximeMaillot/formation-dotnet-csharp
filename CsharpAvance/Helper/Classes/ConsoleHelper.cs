@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Helper.Classes
+﻿namespace Helper.Classes
 {
-    internal static class ConsoleHelper
+    public static class ConsoleHelper
     {
         /// <summary>
         /// Write a message in the console with a certain color
         /// </summary>
         /// <param name="msg"></param>
         /// <param name="color"></param>
-        public static void WriteInColor(string msg, ConsoleColor color)
+        public static void WriteLineInColor(string msg, ConsoleColor color)
         {
             Console.ForegroundColor = color;
             Console.WriteLine(msg);

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Azure.Core;
+using DemoAdo.Classes.Filter;
 using Microsoft.Data.SqlClient;
 using static Azure.Core.HttpHeader;
 
@@ -25,7 +26,7 @@ namespace DemoAdo.Classes
         }
         public SqlCommand Command
         {
-            get => _command; private set
+            get => _command; set
             {
                 _command = value;
             }
