@@ -26,7 +26,7 @@ namespace DemoHotel.Models
             string reservation = $"{Id} : Reservation {statut} | {Client} | \n";
             foreach (var chambre in Chambres)
             {
-                reservation += "\t" + chambre.ToString() + "\n" ;
+                reservation += $"\t {chambre.ToString()} \n" ;
             }
             return reservation;
         }
