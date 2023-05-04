@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoAnnuaire", "DemoAnnuair
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helper", "Menu\Helper.csproj", "{9124903C-92A8-4645-8AA3-734C2ECD10E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoHotel", "DemoHotel\DemoHotel.csproj", "{7E2017A5-70CC-40D4-A622-4B09EDDEBB38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoHotel", "DemoHotel\DemoHotel.csproj", "{7E2017A5-70CC-40D4-A622-4B09EDDEBB38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFHelper", "EFHelper\EFHelper.csproj", "{9C96AC71-A829-4BAA-8A22-930710CF0BF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{7E2017A5-70CC-40D4-A622-4B09EDDEBB38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E2017A5-70CC-40D4-A622-4B09EDDEBB38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E2017A5-70CC-40D4-A622-4B09EDDEBB38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C96AC71-A829-4BAA-8A22-930710CF0BF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C96AC71-A829-4BAA-8A22-930710CF0BF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C96AC71-A829-4BAA-8A22-930710CF0BF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C96AC71-A829-4BAA-8A22-930710CF0BF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
