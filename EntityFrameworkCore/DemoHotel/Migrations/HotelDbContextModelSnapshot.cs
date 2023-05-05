@@ -50,7 +50,7 @@ namespace DemoHotel.Migrations
 
                     b.HasIndex("ReservationId1");
 
-                    b.ToTable("Chambres");
+                    b.ToTable("Chambres", (string)null);
 
                     b.HasData(
                         new
@@ -109,7 +109,7 @@ namespace DemoHotel.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Clients");
+                    b.ToTable("Clients", (string)null);
                 });
 
             modelBuilder.Entity("DemoHotel.Models.Reservation", b =>
@@ -132,7 +132,7 @@ namespace DemoHotel.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("Reservations");
+                    b.ToTable("Reservations", (string)null);
                 });
 
             modelBuilder.Entity("DemoHotel.Models.Chambre", b =>

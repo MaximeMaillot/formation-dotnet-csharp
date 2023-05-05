@@ -1,0 +1,22 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "AddContact";
+    string message = "Ajouter un message";
+}
+<h1>@ViewData["Title"]</h1>
+
+<form asp-controller="Contact" asp-action="Details" method="post">
+    <div class="mb-3">
+        <label for="inputFirstName" class="form-label">Nom</label>
+        <input type="text" class="form-control" id="inputFirstName" aria-describedby="firstnameHelp">
+        <div id="firstnameHelp" class="form-text">Entrez votre nom</div>
+    </div>
+    <div class="mb-3">
+        <label for="inputLastName" class="form-label">Prénom</label>
+        <input type="text" class="form-control" id="inputLastName" aria-describedby="lastnameHelp">
+        <div id="lastnameHelp" class="form-text">Entrez votre prénom</div>
+    </div>
+    <button type="submit" class="btn btn-primary">Valider</button>
+</form>
