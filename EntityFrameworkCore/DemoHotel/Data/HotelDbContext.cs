@@ -18,6 +18,8 @@ namespace DemoHotel.Data
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Client> Clients { get; set; }
 
+        public DbSet<ReservationChambre> ReservationChambres {get;set;}
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data Source=(localdb)\\demo-hotel;Integrated Security=True");
@@ -25,6 +27,10 @@ namespace DemoHotel.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ReservationChambre>().HasKey(table => new
+            {
+                table.ReservationId, table.ChambreId
+            });
             modelBuilder.Entity<Chambre>().HasData(new Chambre()
             {
                 Id = 1,

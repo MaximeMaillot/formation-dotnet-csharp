@@ -19,15 +19,11 @@ namespace DemoHotel.Models
         [Required]
         public int ClientId { get; set; }
         public Client? Client { get; set; }
-        public List<Chambre> Chambres { get; set; } = new List<Chambre>();
+        public List<ReservationChambre> ReservationChambres { get; set; } = new List<ReservationChambre>();
 
         public override string ToString()
         {
             string reservation = $"{Id} : Reservation {statut} | {Client} | \n";
-            foreach (var chambre in Chambres)
-            {
-                reservation += $"\t {chambre.ToString()} \n" ;
-            }
             return reservation;
         }
     }

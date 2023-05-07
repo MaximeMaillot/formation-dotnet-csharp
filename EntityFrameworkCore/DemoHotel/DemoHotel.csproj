@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EFHelper\EFHelper.csproj" />
     <ProjectReference Include="..\Menu\Helper.csproj" />
   </ItemGroup>
 

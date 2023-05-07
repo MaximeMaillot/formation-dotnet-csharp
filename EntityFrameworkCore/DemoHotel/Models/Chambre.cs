@@ -19,8 +19,7 @@ namespace DemoHotel.Models
         [Required]
         public decimal Tarif { get; set; }
 
-        public int? ReservationId;
-        public Reservation? Reservation { get; set; }
+        public List<ReservationChambre> ReservationChambres { get; set; } = new List<ReservationChambre>();
 
         public override string ToString()
         {
