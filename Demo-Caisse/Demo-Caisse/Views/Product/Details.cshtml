@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Détails pour un Produit";
+    Product p = Model;
+}
+@model Product
+
+@if (Model == null) // si le model est égal à null, ça veut dire que l'on a pas trouvé de contact avec cet id
+{
+    <p class="text-danger">
+        Aucune catégorie avec cet Id !!!
+    </p>
+}
+else
+{
+    <div class="card m-3 p-2" style="width: 300px;">
+        <img alt="product-url" src="@p.ProductUrl">
+        <div class="card-title text-center"><h5>@p.Name</h5> </div>
+    </div>
+}
+
+<a asp-action="Index" asp-asp-controller="Product" class="btn btn-success">Retourner à la liste des produits</a>

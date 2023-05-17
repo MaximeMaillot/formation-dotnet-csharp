@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Détails pour une Catégorie";
+    Category c = Model;
+}
+@model Category
+
+@if (Model == null) // si le model est égal à null, ça veut dire que l'on a pas trouvé de contact avec cet id
+{
+    <p class="text-danger">
+        Aucune catégorie avec cet Id !!!
+    </p>
+}
+else
+{
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameForInnerType((Product p) => p.ProductUrl)</th>
+                <th>@Html.DisplayNameForInnerType((Product p) => p.Name)</th>
+                <th>@Html.DisplayNameForInnerType((Product p) => p.Description)</th>
+                <th>@Html.DisplayNameForInnerType((Product p) => p.Price)</th>
+                <th>@Html.DisplayNameForInnerType((Product p) => p.Quantity)</th>
+                <th>@Html.DisplayNameForInnerType((Category c) => c.Name)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Product p in c.Products)
+            {
+            <tr>
+                <td><img style="max-height: 40px;" src="@p.ProductUrl" alt="product"/></td>
+                <td>@p.Name</td>
+                <td>@p.Description</td>
+                <td>@p.Price</td>
+                <td>@p.Quantity</td>
+                <td>@p.Category.Name</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<a asp-action="Index" asp-asp-controller="Category" class="btn btn-success">Retourner à la liste des catégories</a>

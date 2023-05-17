@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Liste des Todos";
+}
+
+@model List<Todo>
+
+
+<form asp-action="SubmitTodo" asp-controller="Todo">
+    <div class="mb-3">
+        <label for="Title" class="form-label">@Html.DisplayNameForInnerType((Todo c) => c.Title)</label>
+        <input name="Title" type="text" class="form-control" id="Title">
+    </div>
+    <div class="mb-3">
+        <label for="Description" class="form-label">@Html.DisplayNameForInnerType((Todo c) => c.Description)</label>
+        <input name="Description" type="text" class="form-control" id="Description">
+    </div>
+    <button type="submit" class="btn btn-primary">Ajouter</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">@Html.DisplayNameForInnerType((Todo c) => c.Title)</th>
+            <th scope="col">@Html.DisplayNameForInnerType((Todo c) => c.Description)</th>
+            <th scope="col" colspan="2">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Todo t in Model)
+        {
+            <tr>
+                <th scope="row">@t.Id</th>
+                <td>@t.Title</td>
+                <td>@t.Description</td>
+                <td><a asp-action="ChangeTodoStatus" asp-controller="Todo" asp-route-id="@t.Id" class=@(t.Status == true ? "btn btn-success" : "btn btn-danger")>Test</a></td>
+                <td><a asp-action="Delete" asp-controller="Todo" asp-route-id="@t.Id" class="btn btn-danger">Supprimer le contact</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

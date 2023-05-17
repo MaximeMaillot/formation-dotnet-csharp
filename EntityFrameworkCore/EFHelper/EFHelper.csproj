@@ -11,4 +11,10 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="GenericClassHelper">
+      <HintPath>..\..\GenericClassHelper\bin\Debug\net6.0\GenericClassHelper.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

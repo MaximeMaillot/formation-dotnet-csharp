@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Liste des Catégories";
+}
+
+@model List<Category>
+
+<a asp-action="FormAdd" asp-controller="Category">Ajouter une catégorie</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">@Html.DisplayNameForInnerType((Category c) => c.Name)</th>
+            <th scope="col" colspan="3">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Category c in Model)
+        {
+            <tr>
+                <th scope="row">@c.Id</th>
+                <td>@c.Name</td>
+                <td><a asp-action="Delete" asp-controller="Category" asp-route-id="@c.Id" class="btn btn-danger">Supprimer</a></td>
+                <td><a asp-action="FormUpdate" asp-controller="Category" asp-route-id="@c.Id" class="btn btn-warning">Modifier</a></td>
+                <td><a asp-action="ShowDetails" asp-controller="Category" asp-route-id="@c.Id" class="btn btn-info">Details</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

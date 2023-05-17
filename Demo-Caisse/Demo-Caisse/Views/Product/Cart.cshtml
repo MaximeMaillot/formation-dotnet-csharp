@@ -1,0 +1,20 @@
+﻿@model List<KeyValuePair<Product, int>>
+@{
+    ViewData["Title"] = "Panier";
+    List<KeyValuePair<Product, int>> panier = Model;
+}
+
+@if (Model.Count == 0)
+{
+    <p>Aucun Panier à afficher</p>
+}
+else
+{
+    @foreach (var product in panier)
+    {
+        <p>
+            @product.Key.Id @product.Key.Name @product.Key.Description : @product.Value
+        </p>
+        <a asp-action="ShowDetails" asp-controller="Product" asp-route-id="@product.Key.Id" class="btn btn-primary">Détails</a>
+    }
+}

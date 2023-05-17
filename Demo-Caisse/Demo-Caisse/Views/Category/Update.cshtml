@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Mettre à jour une catégorie";
+    Category c = Model;
+}
+
+@model Category
+
+<h1>@(Model == null ? "Ajout" : "Modification") d'une catégorie</h1>
+
+<form asp-action="SubmitCategory" asp-controller="Category">
+    <div hidden>
+        <div class="text-danger">@Html.ValidationSummary()</div>
+        <input asp-for="Id" type="text" class="form-control" hidden>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">@Html.DisplayNameFor(c => c.Name)</label>
+        <input asp-for="Name" type="text" class="form-control">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">@(Model == null ? "Ajouter" : "Modifier")</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

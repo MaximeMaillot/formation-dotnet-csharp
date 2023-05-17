@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Liste des Contacts";
+}
+
+@model List<Contact>
+
+
+<a asp-action="CreateRadom" asp-controller="Contact">Ajouter un contact aléatoire</a>
+<a asp-action="FormulaireAjout" asp-controller="Contact">Ajouter un contact</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">@Html.DisplayNameForInnerType((Contact c) => c.FirstName)</th>
+            <th scope="col">@Html.DisplayNameForInnerType((Contact c) => c.LastName)</th>
+            <th scope="col">@Html.DisplayNameForInnerType((Contact c) => c.Email)</th>
+            <th scope="col">@Html.DisplayNameForInnerType((Contact c) => c.Phone)</th>
+            <th scope="col" colspan="2">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Contact c in Model)
+        {
+            <tr>
+                <th scope="row">@c.Id</th>
+                <td>@c.FirstName</td>
+                <td>@c.LastName</td>
+                <td>@c.Email</td>
+                <td>@c.Phone</td>
+                <td><a asp-action="Details" asp-controller="Contact" asp-route-id="@c.Id" class="btn btn-success">Details du contact</a></td>
+                <td><a asp-action="Delete" asp-controller="Contact" asp-route-id="@c.Id" class="btn btn-danger">Supprimer le contact</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
